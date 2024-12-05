@@ -1,5 +1,9 @@
+import './styles/app.scss'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './router.jsx'
+
 export default function App() {
     return (
-        <h1>Test settings</h1>
+        <RouterProvider router={router} />
     )
 }

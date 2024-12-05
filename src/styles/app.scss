@@ -1,0 +1,28 @@
+@import './fonts.scss';
+
+.container {
+    flex: 1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Exo 2", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 500;
+    color: white;
+}
+
+body {
+    background-color: black;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+h1 {
+    font-weight: 600;
+}

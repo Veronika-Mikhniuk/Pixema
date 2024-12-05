@@ -1,0 +1,30 @@
+.menu {
+    width: 300px;
+
+    &__nav {
+        padding-right: 150px;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        font-size: 18px;
+        color: white;
+        list-style: none;
+
+        li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #80858B;
+            font-weight: 600;
+            transition: color 0.3s;
+
+            &:hover,
+            &.active {
+                color: #7B61FF;
+            }
+        }
+    }
+}
