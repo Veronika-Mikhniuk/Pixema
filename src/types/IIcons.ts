@@ -16,4 +16,5 @@ export interface IIcons {
         dropdown: string
     }
     searchFilter: IIconSet
+    darkTheme: IIconSet
 }

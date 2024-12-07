@@ -1,0 +1,22 @@
+@use './themes.scss';
+
+.title {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin: 0;
+
+    &_primary {
+        font-size: 40px;
+        line-height: 48px;
+    }
+
+    &_secondary {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    &_tertiary {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}

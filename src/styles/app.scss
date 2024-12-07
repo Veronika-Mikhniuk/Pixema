@@ -1,4 +1,5 @@
-@import './fonts.scss';
+@use './fonts.scss';
+@use './themes.scss';
 
 .container {
     flex: 1;
@@ -12,11 +13,11 @@
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 500;
-    color: white;
+    color: var(--text-primary);
 }
 
 body {
-    background-color: black;
+    background-color: var(--background-primary);
 }
 
 a {

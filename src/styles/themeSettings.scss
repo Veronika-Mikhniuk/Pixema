@@ -1,0 +1,37 @@
+@use './themes.scss';
+
+.theme-settings {
+    &__card {
+        margin-top: 16px;
+        padding: 24px 40px;
+        background-color: var(--background-card);
+        border-radius: 10px;
+        border: 2px solid var(--border-card);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__title {
+        font-size: 16px;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    &__description {
+        font-size: 16px;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    &__toggle {
+        display: flex;
+        align-items: center;
+    }
+}

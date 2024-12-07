@@ -1,5 +1,7 @@
+import { ThemeSettings } from "@/components/ThemeSettings"
+
 export function Settings() {
     return (
-        <h1>Settings</h1>
+        <ThemeSettings />
     )
 }

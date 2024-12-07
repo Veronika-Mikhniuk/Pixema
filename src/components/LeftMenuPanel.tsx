@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from "react-router-dom"
 import { icons } from '@/assets/icons'
-
 import { PageType, IMenuItem } from '@/types/MenuTypes'
-
 import '@/styles/leftMenuPanel.scss'
 
 export function LeftMenuPanel() {
