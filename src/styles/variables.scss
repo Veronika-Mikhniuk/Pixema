@@ -31,3 +31,9 @@ html[data-theme='light'] {
     --accent-color: #7B61FF;
     --accent-color-hover: #917CFF;
 }
+
+* {
+    --rating-high: #00A340;
+    --rating-medium: #F3A608;
+    --rating-low: #F45D2D;
+}

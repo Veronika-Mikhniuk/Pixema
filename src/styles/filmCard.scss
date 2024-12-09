@@ -1,0 +1,46 @@
+@use './variables.scss';
+
+.film-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__poster-container {
+        position: relative;
+    }
+
+    &__poster {
+        width: 100%;
+        border-radius: 20px;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+    }
+
+    &__rating {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 14px;
+
+        &_high {
+            background-color: var(--rating-high);
+        }
+
+        &_medium {
+            background-color: var(--rating-medium);
+        }
+
+        &_low {
+            background-color: var(--rating-low);
+        }
+    }
+
+    &__genres {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin: 0;
+    }
+}
