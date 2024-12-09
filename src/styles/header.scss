@@ -42,7 +42,7 @@
             }
 
             &:focus {
-                border: 2px solid #7B61FF;
+                border: 2px solid var(--accent-color);
                 outline: none;
             }
         }

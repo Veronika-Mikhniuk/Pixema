@@ -1,0 +1,26 @@
+@use './variables.scss';
+
+.nav {
+    width: 100%;
+    padding: 0 0 30px 0;
+    display: flex;
+    gap: 20px;
+
+    &__tab {
+        background-color: var(--background-block);
+        border: 2px solid var(--border-block);
+        border-radius: 10px;
+        padding: 10px 30px;
+        font-weight: 600;
+
+        &:hover {
+            border: 2px solid var(--accent-color);
+        }
+
+        &_active {
+            border: 2px solid var(--accent-color);
+        }
+    }
+
+
+}

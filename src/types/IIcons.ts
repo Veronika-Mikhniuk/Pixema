@@ -5,7 +5,7 @@ interface IIconSet {
 
 interface INavIcons {
     home: IIconSet
-    trends: IIconSet
+    popular: IIconSet
     favourite: IIconSet
     settings: IIconSet
 }

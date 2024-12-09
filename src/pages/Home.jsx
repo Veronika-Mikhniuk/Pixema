@@ -1,7 +1,11 @@
-import { FilmList } from "@/components/FilmList"
+import { Outlet } from 'react-router-dom'
+import { TabSwitcher } from '@/components/TabSwitcher'
 
 export function Home() {
     return (
-        <FilmList />
+        <>
+            <TabSwitcher />
+            <Outlet />
+        </>
     )
 }

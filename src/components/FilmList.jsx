@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react'
+import { useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchFilms } from '@/redux/films-slice'
+import { fetchFilms, fetchSeries } from '@/redux/films-slice'
 import { FilmGrid } from './FilmsGrid'
 
 export function FilmList() {
     const dispatch = useDispatch()
+    const location = useLocation()
     const { list: films, loading, error } = useSelector(state => state.films)
 
     useEffect(() => {
-        dispatch(fetchFilms())
+        if (location.pathname === '/films') {
+            dispatch(fetchFilms())
+        } else if (location.pathname === '/series') {
+            dispatch(fetchSeries())
+        }
     }, [])
 
 
@@ -16,9 +22,6 @@ export function FilmList() {
     if (error) return <h2>Error: {error}</h2>
 
     return (
-        <div>
-            <h1>Films:</h1>
-            <FilmGrid films={films} />
-        </div>
+        <FilmGrid films={films} />
     )
 }

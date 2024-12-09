@@ -2,10 +2,12 @@ html[data-theme='dark'] {
     // Colors for dark theme
     --background-primary: #131313;
     --background-secondary: #323537;
+
     --background-input: #323537;
-    --background-card: #242426;
     --border-input: #323537;
-    --border-card: #242426;
+
+    --background-block: #242426;
+    --border-block: #242426;
 
     --text-primary: #cbd0d6;
     --text-secondary: #80858B;
@@ -19,10 +21,12 @@ html[data-theme='light'] {
     // Colors for light theme
     --background-primary: #FFFFFF;
     --background-secondary: #AFB2B6;
+
     --background-input: #ffffff;
-    --background-card: var(--background-primary);
     --border-input: #AFB2B6;
-    --border-card: #AFB2B6;
+
+    --background-block: var(--background-primary);
+    --border-block: #AFB2B6;
 
     --text-primary: #353535;
     --text-secondary: #80858B;

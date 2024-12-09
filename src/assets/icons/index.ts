@@ -20,7 +20,7 @@ export const icons: IIcons = {
             active: homePageActive,
             default: homePageDefault
         },
-        trends: {
+        popular: {
             active: trendsPageActive,
             default: trendsPageDefault
         },
