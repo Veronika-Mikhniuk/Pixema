@@ -28,3 +28,5 @@ export const defaultParams = {
 }
 
 export const baseImgUrl = 'https://image.tmdb.org/t/p/'
+
+export const maxPageLimit = 500 //according to api docs

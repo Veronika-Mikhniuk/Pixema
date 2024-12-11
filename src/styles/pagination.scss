@@ -1,0 +1,39 @@
+@use './variables.scss';
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    list-style: none;
+    margin: 40px 0 0;
+
+    &__item {
+        cursor: pointer;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 6px;
+        color: var(--text-primary);
+        text-decoration: none;
+
+        &:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        &_active {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+    }
+
+    &__dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+    }
+}

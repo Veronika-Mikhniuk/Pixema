@@ -18,14 +18,14 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: '',
-                        element: <Navigate to="films" />
+                        element: <Navigate to="films/1" />
                     },
                     {
-                        path: 'films',
+                        path: 'films/:currentPage',
                         element: <Films />
                     },
                     {
-                        path: 'series',
+                        path: 'series/:currentPage',
                         element: <Series />
                     }
                 ]

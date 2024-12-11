@@ -11,7 +11,7 @@ export function LeftMenuPanel() {
     const isLinkActive = (path: string) => {
         // return true or false
         if (path === '/') {
-            return location.pathname === '/' || location.pathname === '/films' || location.pathname === '/series'
+            return location.pathname.startsWith('/films') || location.pathname.startsWith('/series')
         }
         return location.pathname.startsWith(path)
     }
