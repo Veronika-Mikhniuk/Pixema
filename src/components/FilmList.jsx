@@ -29,7 +29,7 @@ export function FilmList() {
     return (
         <>
             <FilmGrid films={films} />
-            <div className="nav-footer pt-3 pb-3">
+            <div className="nav-footer">
                 <Pagination
                     currentPage={currentPage}
                     pageCount={avaliablePageCount}

@@ -1,11 +1,70 @@
 @use './variables.scss';
 
+.pagination-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 60px 0 0;
+
+    &__prev-button,
+    &__next-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-primary);
+        font-size: 16px;
+        padding: 0;
+        transition: color 0.3s ease;
+
+        svg path {
+            fill: var(--text-primary);
+            transition: fill 0.3s ease;
+        }
+
+        &:hover {
+            color: var(--accent-color);
+
+            svg path {
+                fill: var(--accent-color);
+            }
+        }
+    }
+
+    &__prev-button {
+        svg {
+            margin-bottom: -1px;
+        }
+    }
+
+    &__next-button {
+        svg {
+            margin-bottom: -4px;
+        }
+    }
+
+    &__button_disabled {
+        opacity: 0.5;
+        cursor: default;
+
+        &:hover {
+            color: var(--text-primary);
+
+            svg path {
+                fill: var(--text-primary);
+            }
+        }
+    }
+}
+
 .pagination {
     display: flex;
     justify-content: center;
     gap: 15px;
     list-style: none;
-    margin: 40px 0 0;
 
     &__item {
         cursor: pointer;
