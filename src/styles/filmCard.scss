@@ -4,6 +4,16 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: perspective(1000px) scale(1.04);
+        transform-origin: center;
+    }
 
     &__poster-container {
         position: relative;
@@ -14,6 +24,7 @@
         border-radius: 20px;
         aspect-ratio: 2/3;
         object-fit: cover;
+        transform: translateZ(0);
     }
 
     &__rating {

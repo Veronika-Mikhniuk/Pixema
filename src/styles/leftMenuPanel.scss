@@ -26,5 +26,14 @@
                 color: #7B61FF;
             }
         }
+
+        li {
+            will-change: transform;
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
     }
 }
