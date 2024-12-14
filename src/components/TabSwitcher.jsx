@@ -6,13 +6,13 @@ export function TabSwitcher({ path = '' }) {
         <div style={{ width: '100%' }}>
             <div className="nav">
                 <NavLink
-                    to={path ? `/${path}/films` : "/films/1"}
+                    to={path ? `/${path}/films/1` : "/films/1"}
                     className={() => location.pathname.includes('/films') ? "nav__tab nav__tab_active" : "nav__tab"}
                 >
                     Films
                 </NavLink>
                 <NavLink
-                    to={path ? `/${path}/tv` : "/series/1"}
+                    to={path ? `/${path}/series/1` : "/series/1"}
                     className={() => location.pathname.includes('/series') ? "nav__tab nav__tab_active" : "nav__tab"}
                 >
                     Series

@@ -6,17 +6,19 @@ export const apiConfig = {
 export const filmsEndpoints = {
     films: {
         all: '/discover/movie', // have filtering queryParams
+        trending: '/trending/movie/week', // have day or week param
         // have only pagination pages
         popular: '/movie/popular',
         topRated: '/movie/top_rated',
         upcoming: '/movie/upcoming'
     },
-    tv: {
+    series: {
         all: '/discover/tv', // have filtering queryParams
+        trending: '/trending/tv/week', // have day or week param
         // have only pagination pages
         popular: '/tv/popular',
         topRated: '/tv/top_rated',
-        onTheAir: '/tv/on_the_air'
+        upcoming: '/tv/on_the_air'
     }
 }
 
@@ -24,7 +26,7 @@ export const defaultParams = {
     include_adult: false,
     include_video: false,
     language: 'en-US',
-    sort_by: 'popularity.desc'
+    // sort_by: 'vote_average.desc'
 }
 
 export const baseImgUrl = 'https://image.tmdb.org/t/p/'

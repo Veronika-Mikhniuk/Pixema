@@ -16,16 +16,18 @@ export function LeftMenuPanel() {
         return location.pathname.startsWith(path)
     }
 
-    const getIconSrc = (page: PageType, isActive: boolean, isHovered: boolean) => {
-        return isActive || isHovered ? icons.nav[page].active : icons.nav[page].default
-    }
-
     const menuItems: IMenuItem[] = [
         { path: '/', page: 'home', text: 'Home' },
         { path: '/popular', page: 'popular', text: 'Popular' },
+        { path: '/topRated', page: 'topRated', text: 'Top Rated' },
+        { path: '/upcoming', page: 'upcoming', text: 'Upcoming' },
         { path: '/favourites', page: 'favourite', text: 'Favourites' },
         { path: '/settings', page: 'settings', text: 'Settings' },
     ]
+
+    const getIconSrc = (page: PageType, isActive: boolean, isHovered: boolean) => {
+        return isActive || isHovered ? icons.nav[page].active : icons.nav[page].default
+    }
 
     return (
         <div className="menu">

@@ -1,14 +1,15 @@
 import { apiConfig, filmsEndpoints, defaultParams } from '@/config/api'
 
-export const requestFilms = async ({ type = 'films', ...params } = {}) => {
+export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...params } = {}) => {
     try {
         const queryParams = new URLSearchParams({
             ...defaultParams,
             ...params
         }).toString()
 
-        const baseEndpoint = type === 'films' ? filmsEndpoints.films.all : filmsEndpoints.tv.all
-        const url = `${apiConfig.baseUrl}${baseEndpoint}?${queryParams}`
+        const baseEndpoint = type === 'films' ? filmsEndpoints.films : filmsEndpoints.series
+        const advancedEndpoint = baseEndpoint[endpoint]
+        const url = `${apiConfig.baseUrl}${advancedEndpoint}?${queryParams}`
 
         const response = await fetch(url, {
             headers: {

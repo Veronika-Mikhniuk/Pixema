@@ -24,6 +24,14 @@ export const icons: IIcons = {
             active: trendsPageActive,
             default: trendsPageDefault
         },
+        topRated: {
+            active: trendsPageActive,
+            default: trendsPageDefault
+        },
+        upcoming: {
+            active: trendsPageActive,
+            default: trendsPageDefault
+        },
         favourite: {
             active: favouritePageActive,
             default: favouritePageDefault

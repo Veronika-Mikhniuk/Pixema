@@ -6,6 +6,8 @@ interface IIconSet {
 interface INavIcons {
     home: IIconSet
     popular: IIconSet
+    topRated: IIconSet
+    upcoming: IIconSet
     favourite: IIconSet
     settings: IIconSet
 }

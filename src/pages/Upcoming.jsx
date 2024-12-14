@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom'
 import { TabSwitcher } from '@/components/TabSwitcher'
 
-export function Popular() {
+export function Upcoming() {
     return (
         <>
-            <TabSwitcher path='popular' />
+            <TabSwitcher path='upcoming' />
             <Outlet />
         </>
     )

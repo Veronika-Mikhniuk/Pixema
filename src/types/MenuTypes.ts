@@ -1,4 +1,4 @@
-export type PageType = 'home' | 'popular' | 'favourite' | 'settings'
+export type PageType = 'home' | 'popular' | 'topRated' | 'upcoming' | 'favourite' | 'settings'
 
 export interface IMenuItem {
     path: string

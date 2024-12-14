@@ -6,7 +6,7 @@ import { maxPageLimit } from '@/config/api'
 import { FilmGrid } from './FilmsGrid'
 import { Pagination } from '@/components/Pagination'
 
-export function FilmList() {
+export function FilmList({ type, endpoint }) {
     const { currentPage } = useParams()
     const dispatch = useDispatch()
     const location = useLocation()
@@ -14,12 +14,16 @@ export function FilmList() {
 
     const avaliablePageCount = Math.min(pageCount, maxPageLimit)
 
-    useEffect(() => {
-        if (location.pathname.includes('/films')) {
-            dispatch(fetchFilms({ type: 'films', page: currentPage }))
-        } else if (location.pathname.includes('/series')) {
-            dispatch(fetchFilms({ type: 'series', page: currentPage }))
+    const getPaginationBaseUrl = () => {
+        if (endpoint === 'all') {
+            return `/${type}`
         }
+        return `/${endpoint}/${type}`
+    }
+
+    useEffect(() => {
+        dispatch(fetchFilms({ type, endpoint, page: currentPage }))
+
         window.scrollTo(0, 0) // scrolling to the top of the page when pagination link was pressed
     }, [currentPage, dispatch])
 
@@ -33,7 +37,7 @@ export function FilmList() {
                 <Pagination
                     currentPage={currentPage}
                     pageCount={avaliablePageCount}
-                    url={location.pathname.includes('/films') ? '/films' : '/series'} />
+                    url={getPaginationBaseUrl()} />
             </div>
         </>
     )
