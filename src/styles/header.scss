@@ -4,7 +4,11 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    padding: 20px 0 0;
+    padding: 20px 0 40px;
+    position: sticky;
+    top: 0;
+    background-color: var(--background-primary);
+    z-index: 2;
 
     &__logo {
         width: 300px;

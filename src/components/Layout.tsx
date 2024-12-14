@@ -1,8 +1,7 @@
-import { Header } from "@/components/Header"
-import { Footer } from "@/components/Footer"
+import { Header } from '@/components/Header'
 import { Main } from "@/components/Main"
-import { LeftMenuPanel } from './LeftMenuPanel'
-import { Outlet } from "react-router-dom"
+import { LeftMenuPanel } from '@/components/LeftMenuPanel'
+import { Outlet } from 'react-router-dom'
 
 export function Layout() {
     return (
@@ -15,7 +14,8 @@ export function Layout() {
                 minHeight: '100vh',
                 padding: '0 10px',
                 margin: '0 auto',
-                gap: '40px'
+                position: 'relative',
+                height: '100vh',
             }}>
 
             <Header />
@@ -25,7 +25,6 @@ export function Layout() {
                     <Outlet />
                 </div>
             </Main>
-            <Footer />
         </div>
     )
 

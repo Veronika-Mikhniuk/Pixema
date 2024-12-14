@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { icons } from '@/assets/icons'
 import { PageType, IMenuItem } from '@/types/MenuTypes'
+import { Footer } from '@/components/Footer'
 import '@/styles/leftMenuPanel.scss'
 
 export function LeftMenuPanel() {
@@ -31,30 +32,35 @@ export function LeftMenuPanel() {
 
     return (
         <div className="menu">
-            <nav className="menu__nav">
-                <ul className="menu__list">
-                    {menuItems.map(item => ( // mapping based on menuItems
-                        <li key={item.page}>
-                            <NavLink
-                                to={item.path}
-                                className={() => isLinkActive(item.path) ? 'active' : ''}
-                                onMouseEnter={() => setHoveredItem(item.page)}
-                                onMouseLeave={() => setHoveredItem(null)}
-                            >
-                                {() => (
-                                    <>
-                                        <img
-                                            src={getIconSrc(item.page, isLinkActive(item.path), hoveredItem === item.page)}
-                                            alt={`${item.text} icon`}
-                                        />
-                                        {item.text}
-                                    </>
-                                )}
-                            </NavLink>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
+            <div className="menu__content">
+                <nav className="menu__nav">
+                    <ul className="menu__list">
+                        {menuItems.map(item => ( // mapping based on menuItems
+                            <li key={item.page}>
+                                <NavLink
+                                    to={item.path}
+                                    className={() => isLinkActive(item.path) ? 'active' : ''}
+                                    onMouseEnter={() => setHoveredItem(item.page)}
+                                    onMouseLeave={() => setHoveredItem(null)}
+                                >
+                                    {() => (
+                                        <>
+                                            <img
+                                                src={getIconSrc(item.page, isLinkActive(item.path), hoveredItem === item.page)}
+                                                alt={`${item.text} icon`}
+                                            />
+                                            {item.text}
+                                        </>
+                                    )}
+                                </NavLink>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            </div>
+            <div className="menu__footer">
+                <Footer />
+            </div>
         </div>
     )
 }

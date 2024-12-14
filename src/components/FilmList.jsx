@@ -22,9 +22,9 @@ export function FilmList({ type, endpoint }) {
     }
 
     useEffect(() => {
+
         dispatch(fetchFilms({ type, endpoint, page: currentPage }))
 
-        window.scrollTo(0, 0) // scrolling to the top of the page when pagination link was pressed
     }, [currentPage, dispatch])
 
     if (loading) return <h2>Loading...</h2>
@@ -33,12 +33,10 @@ export function FilmList({ type, endpoint }) {
     return (
         <>
             <FilmGrid films={films} />
-            <div className="nav-footer">
-                <Pagination
-                    currentPage={currentPage}
-                    pageCount={avaliablePageCount}
-                    url={getPaginationBaseUrl()} />
-            </div>
+            <Pagination
+                currentPage={currentPage}
+                pageCount={avaliablePageCount}
+                url={getPaginationBaseUrl()} />
         </>
     )
 }
