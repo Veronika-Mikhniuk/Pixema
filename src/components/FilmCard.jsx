@@ -1,10 +1,20 @@
+import { useSelector } from 'react-redux'
 import { baseImgUrl } from '@/config/api'
 import { Title } from './Title'
 import '@/styles/filmCard.scss'
 
 export function FilmCard({ film }) {
+    const { genres } = useSelector(state => state.films)
+
     const getRatingValue = (rating) => {
         return rating ? rating.toFixed(1) : 'no rating';
+    }
+
+    const getGenreNames = () => {
+        return film.genre_ids
+            ?.map(id => genres.find(genre => genre.id === id)?.name)
+            .filter(Boolean)
+            .join(' · ')
     }
 
     const getColorByRating = (rating) => {
@@ -29,7 +39,7 @@ export function FilmCard({ film }) {
             </div>
             <Title tertiary>{film.title || film.name}</Title>
             <p className="film-card__genres">
-                {film.genre_ids?.join(' · ')}
+                {getGenreNames()}
             </p>
         </div>
     )

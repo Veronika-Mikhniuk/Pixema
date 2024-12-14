@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { requestFilms } from "@/services/films"
+import { requestFilms, requestGenres } from "@/services/films"
 
 const initialState = {
     list: [],
     loading: false,
     error: null,
-    pageCount: null
+    pageCount: null,
+    genres: [],
+    genresLoading: false,
+    genresError: null
 }
 
 export const fetchFilms = createAsyncThunk(
@@ -21,12 +24,26 @@ export const fetchFilms = createAsyncThunk(
     }
 )
 
+export const fetchGenres = createAsyncThunk(
+    'films/fetchGenres',
+    async (_, { rejectWithValue }) => {
+        const data = await requestGenres()
+
+        if (data.hasError) {
+            return rejectWithValue(data)
+        }
+
+        return data
+    }
+)
+
 export const filmsSlice = createSlice({
     name: 'films',
     initialState,
     reucers: {},
     extraReducers: (builder) => {
         builder
+            // films
             .addCase(fetchFilms.pending, (state) => {
                 state.isLoading = true
                 state.error = null
@@ -39,6 +56,19 @@ export const filmsSlice = createSlice({
             .addCase(fetchFilms.rejected, (state, action) => {
                 state.isLoading = false
                 state.error = action.error.message
+            })
+            // genres
+            .addCase(fetchGenres.pending, (state) => {
+                state.genresLoading = true
+                state.genresError = null
+            })
+            .addCase(fetchGenres.fulfilled, (state, action) => {
+                state.genresLoading = false
+                state.genres = action.payload.genres
+            })
+            .addCase(fetchGenres.rejected, (state, action) => {
+                state.genresLoading = false
+                state.genresError = action.error.message
             })
 
     }

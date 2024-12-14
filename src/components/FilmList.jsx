@@ -5,6 +5,7 @@ import { fetchFilms } from '@/redux/films-slice'
 import { maxPageLimit } from '@/config/api'
 import { FilmGrid } from './FilmsGrid'
 import { Pagination } from '@/components/Pagination'
+import { fetchGenres } from '@/redux/films-slice.js'
 
 export function FilmList({ type, endpoint }) {
     const { currentPage } = useParams()
@@ -15,14 +16,14 @@ export function FilmList({ type, endpoint }) {
     const avaliablePageCount = Math.min(pageCount, maxPageLimit)
 
     const getPaginationBaseUrl = () => {
-        if (endpoint === 'all') {
+        if (endpoint === 'trending') {
             return `/${type}`
         }
         return `/${endpoint}/${type}`
     }
 
     useEffect(() => {
-
+        dispatch(fetchGenres())
         dispatch(fetchFilms({ type, endpoint, page: currentPage }))
 
     }, [currentPage, dispatch])

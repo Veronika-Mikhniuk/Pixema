@@ -26,7 +26,6 @@ export const defaultParams = {
     include_adult: false,
     include_video: false,
     language: 'en-US',
-    // sort_by: 'vote_average.desc'
 }
 
 export const baseImgUrl = 'https://image.tmdb.org/t/p/'
