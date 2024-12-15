@@ -34,6 +34,35 @@ export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...p
     }
 }
 
+export const requestFilm = async ({ id, type = 'films' } = {}) => {
+    try {
+        const endpoint = type === 'films' ? filmsEndpoints.films.details : filmsEndpoints.series.details
+        const url = `${apiConfig.baseUrl}${endpoint}/${id}?language=en-US`
+
+        const response = await fetch(url, {
+            headers: {
+                'Authorization': `Bearer ${apiConfig.token}`,
+                'accept': 'application/json'
+            }
+        })
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch films')
+        }
+
+        const data = await response.json()
+        console.log(data)
+        return data
+
+    } catch (error) {
+        console.log(error)
+        return {
+            hasError: true,
+            message: error.message,
+        }
+    }
+}
+
 export const requestGenres = async () => {
     try {
         const url = `${apiConfig.baseUrl}/genre/movie/list?language=en`

@@ -1,10 +1,14 @@
 import { useSelector } from 'react-redux'
+import { useLocation, NavLink } from 'react-router-dom'
 import { baseImgUrl } from '@/config/api'
-import { Title } from './Title'
+import { Title } from '@/components/Title'
+import { Rating } from '@/components/Rating'
 import '@/styles/filmCard.scss'
 
 export function FilmCard({ film }) {
     const { genres } = useSelector(state => state.films)
+    const location = useLocation()
+    const type = location.pathname.includes('films') ? 'films' : 'series'
 
     const getRatingValue = (rating) => {
         return rating ? rating.toFixed(1) : 'no rating';
@@ -24,7 +28,7 @@ export function FilmCard({ film }) {
     }
 
     return (
-        <div className="film-card">
+        <NavLink to={`/${type}/details/${film.id}`} className="film-card">
             <div className="film-card__poster-container">
                 <img
                     src={`${baseImgUrl}w500${film.poster_path}`}
@@ -32,8 +36,8 @@ export function FilmCard({ film }) {
                     className="film-card__poster"
                 />
                 {film.vote_average > 0 && (
-                    <span className={`film-card__rating film-card__rating_${getColorByRating(film.vote_average)}`}>
-                        {getRatingValue(film.vote_average)}
+                    <span className="film-card__rating">
+                        <Rating value={film.vote_average} />
                     </span>
                 )}
             </div>
@@ -41,6 +45,6 @@ export function FilmCard({ film }) {
             <p className="film-card__genres">
                 {getGenreNames()}
             </p>
-        </div>
+        </NavLink >
     )
 }

@@ -10,7 +10,8 @@ export const filmsEndpoints = {
         // have only pagination pages
         popular: '/movie/popular',
         topRated: '/movie/top_rated',
-        upcoming: '/movie/upcoming'
+        upcoming: '/movie/upcoming',
+        details: '/movie'
     },
     series: {
         all: '/discover/tv', // have filtering queryParams
@@ -18,7 +19,8 @@ export const filmsEndpoints = {
         // have only pagination pages
         popular: '/tv/popular',
         topRated: '/tv/top_rated',
-        upcoming: '/tv/on_the_air'
+        upcoming: '/tv/on_the_air',
+        details: '/tv'
     }
 }
 

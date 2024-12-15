@@ -1,0 +1,33 @@
+@use './variables.scss';
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: 600;
+    color: white;
+
+    &_small {
+        padding: 3px 8px;
+        min-width: 35px;
+        font-size: 14px;
+    }
+
+    &_large {
+        padding: 4px 12px;
+        font-size: 16px;
+    }
+
+    &_high {
+        background-color: var(--rating-high);
+    }
+
+    &_medium {
+        background-color: var(--rating-medium);
+    }
+
+    &_low {
+        background-color: var(--rating-low);
+    }
+}

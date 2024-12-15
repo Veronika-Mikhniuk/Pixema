@@ -9,6 +9,7 @@ import { Favourites } from '@/pages/Favorites'
 import { Settings } from '@/pages/Settings'
 import { TopRated } from '@/pages/TopRated'
 import { Upcoming } from '@/pages/Upcoming'
+import { FilmDetails } from '@/components/FilmDetails'
 
 export const router = createBrowserRouter([
     {
@@ -85,6 +86,14 @@ export const router = createBrowserRouter([
                         element: <Series upcoming />
                     }
                 ]
+            },
+            {
+                path: '/films/details/:id',
+                element: <FilmDetails type='films' />,
+            },
+            {
+                path: '/series/details/:id',
+                element: <FilmDetails type='series' />,
             },
             {
                 path: '/favourites',
