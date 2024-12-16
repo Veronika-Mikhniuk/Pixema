@@ -11,11 +11,15 @@ export function FilmList({ type, endpoint }) {
     const { currentPage } = useParams()
     const dispatch = useDispatch()
     const location = useLocation()
-    const { list: films, loading, error, pageCount } = useSelector(state => state.films)
+    const { list: films, loading, error, pageCount, searchQuery } = useSelector(state => state.films)
 
     const avaliablePageCount = Math.min(pageCount, maxPageLimit)
 
     const getPaginationBaseUrl = () => {
+        if (endpoint === 'search') {
+            return `/search/${searchQuery}/${type}`
+        }
+
         if (endpoint === 'trending') {
             return `/${type}`
         }
@@ -24,9 +28,14 @@ export function FilmList({ type, endpoint }) {
 
     useEffect(() => {
         dispatch(fetchGenres())
-        dispatch(fetchFilms({ type, endpoint, page: currentPage }))
 
-    }, [currentPage, dispatch])
+        if (endpoint === 'search' && searchQuery) {
+            dispatch(fetchFilms({ type, endpoint, query: searchQuery, page: currentPage }))
+        } else {
+            dispatch(fetchFilms({ type, endpoint, page: currentPage }))
+        }
+
+    }, [currentPage, searchQuery, dispatch])
 
     if (loading) return <h2>Loading...</h2>
     if (error) return <h2>Error: {error}</h2>

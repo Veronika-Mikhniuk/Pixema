@@ -51,7 +51,6 @@ export const requestFilm = async ({ id, type = 'films' } = {}) => {
         }
 
         const data = await response.json()
-        console.log(data)
         return data
 
     } catch (error) {

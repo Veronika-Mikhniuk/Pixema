@@ -7,6 +7,7 @@ const initialState = {
     error: null,
     pageCount: null,
     currentFilm: null,
+    searchQuery: null,
     genres: [],
     genresLoading: false,
     genresError: null
@@ -54,7 +55,11 @@ export const fetchGenres = createAsyncThunk(
 export const filmsSlice = createSlice({
     name: 'films',
     initialState,
-    reucers: {},
+    reducers: {
+        setSearchQuery: (state, action) => {
+            state.searchQuery = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder
             // films
@@ -101,4 +106,5 @@ export const filmsSlice = createSlice({
     }
 })
 
-export const filmsReducer = filmsSlice.reducer  
+export const { setSearchQuery } = filmsSlice.actions
+export const filmsReducer = filmsSlice.reducer 

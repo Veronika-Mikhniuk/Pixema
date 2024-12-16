@@ -11,7 +11,9 @@ export const filmsEndpoints = {
         popular: '/movie/popular',
         topRated: '/movie/top_rated',
         upcoming: '/movie/upcoming',
-        details: '/movie'
+
+        details: '/movie',
+        search: '/search/movie'
     },
     series: {
         all: '/discover/tv', // have filtering queryParams
@@ -20,8 +22,10 @@ export const filmsEndpoints = {
         popular: '/tv/popular',
         topRated: '/tv/top_rated',
         upcoming: '/tv/on_the_air',
-        details: '/tv'
-    }
+
+        details: '/tv',
+        search: '/search/tv'
+    },
 }
 
 export const defaultParams = {
