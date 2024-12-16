@@ -22,15 +22,6 @@ export function Header() {
             </div>
             <div className="container" style={{ display: 'flex' }} >
                 <SearchForm />
-                {/* <form className="header__search">
-                    <input
-                        type="text"
-                        placeholder="Search movies"
-                    />
-                    <button type="button" className="header__filter">
-                        <img src={filterIcon} alt="icon" />
-                    </button>
-                </form> */}
                 <div className="header__profile">
                     <User username='Artem_Lapitsky' />
                 </div>

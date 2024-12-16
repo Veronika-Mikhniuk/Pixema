@@ -2,6 +2,8 @@ import { useState, useEffect } from "react"
 import { useNavigate, useParams, useLocation } from "react-router-dom"
 import { useDispatch } from 'react-redux'
 import { setSearchQuery } from '@/redux/films-slice'
+import filterIcon from '@/assets/icons/filter-button-icon.svg'
+import '@/styles/searchForm.scss'
 
 export function SearchForm() {
     const navigate = useNavigate()
@@ -42,6 +44,9 @@ export function SearchForm() {
                 onChange={handleChange}
                 onInput={handleClear}
             />
+            <button type="button" className="search-form__filter">
+                <img src={filterIcon} alt="icon" />
+            </button>
         </form>
     )
 }

@@ -21,12 +21,6 @@ export function FilmCard({ film }) {
             .join(' · ')
     }
 
-    const getColorByRating = (rating) => {
-        if (rating >= 7) return 'high'
-        if (rating >= 5) return 'medium'
-        return 'low'
-    }
-
     return (
         <NavLink to={`/${type}/details/${film.id}`} className="film-card">
             <div className="film-card__poster-container">
