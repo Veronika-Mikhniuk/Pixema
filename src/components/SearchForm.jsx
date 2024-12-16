@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 import { useNavigate, useParams, useLocation } from "react-router-dom"
 import { useDispatch } from 'react-redux'
 import { setSearchQuery } from '@/redux/films-slice'
@@ -6,15 +6,27 @@ import filterIcon from '@/assets/icons/filter-button-icon.svg'
 import '@/styles/searchForm.scss'
 
 export function SearchForm() {
+    const { query: queryParam } = useParams() // for saving queryParam when reloading page
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
-    const [query, setQuery] = useState('')
+
+    const [query, setQuery] = useState(() => {
+        if (location.pathname.includes('/search/')) {
+            const searchQuery = decodeURIComponent(queryParam || '')
+            dispatch(setSearchQuery(searchQuery))
+            return searchQuery
+        }
+        return ''
+    })
 
     useEffect(() => {
-        setQuery('')
-        navigate('/films/1')
-    }, [])
+        // clear input if pathname don't include /search/
+        if (!location.pathname.includes('/search/')) {
+            setQuery('')
+            dispatch(setSearchQuery(''))
+        }
+    }, [location.pathname])
 
     const handleChange = (event) => {
         setQuery(event.target.value)
@@ -22,6 +34,8 @@ export function SearchForm() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
+        if (!query.trim()) return
+
         dispatch(setSearchQuery(query))
         const encodedQuery = encodeURIComponent(query)
         navigate(`/films/search/${encodedQuery}/1`)

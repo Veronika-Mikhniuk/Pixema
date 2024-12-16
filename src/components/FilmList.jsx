@@ -40,6 +40,15 @@ export function FilmList({ type, endpoint }) {
     if (loading) return <h2>Loading...</h2>
     if (error) return <h2>Error: {error}</h2>
 
+    if (endpoint === 'search' && films.length === 0) {
+        return (
+            <div className="no-results">
+                <h2>No {type === 'films' ? 'films' : 'series'} found</h2>
+                <p>We couldn't find any {type === 'films' ? 'films' : 'TV series'} matching "{searchQuery}"</p>
+            </div>
+        )
+    }
+
     return (
         <>
             <FilmGrid films={films} />

@@ -11,7 +11,7 @@ export function FilmCard({ film }) {
     const type = location.pathname.includes('films') ? 'films' : 'series'
 
     const getRatingValue = (rating) => {
-        return rating ? rating.toFixed(1) : 'no rating';
+        return rating ? rating.toFixed(1) : 'no rating'
     }
 
     const getGenreNames = () => {
