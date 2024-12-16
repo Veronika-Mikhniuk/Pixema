@@ -7,23 +7,30 @@ export function TabSwitcher({ path = '' }) {
     const { query } = useParams() // subscripton on path changes! without it don't work
     const searchQuery = useSelector(state => state.films.searchQuery)
 
-    const getSearchPath = () => {
+    const getPath = (type) => {
         if (path === 'search' && searchQuery) {
-            return `/search/${searchQuery}`
+            return `/${type}/search/${searchQuery}/1`
         }
-        return path ? `/${path}` : ''
+        switch (path) {
+            case 'popular':
+            case 'topRated':
+            case 'upcoming':
+                return `/${path}/${type}/1`
+            default:
+                return `/${type}/1`
+        }
     }
 
     return (
         <div className="nav">
             <NavLink
-                to={`${getSearchPath()}/films/1`}
+                to={getPath('films')}
                 className={() => location.pathname.includes('/films') ? "nav__tab nav__tab_active" : "nav__tab"}
             >
                 Films
             </NavLink>
             <NavLink
-                to={`${getSearchPath()}/series/1`}
+                to={getPath('series')}
                 className={() => location.pathname.includes('/series') ? "nav__tab nav__tab_active" : "nav__tab"}
             >
                 Series

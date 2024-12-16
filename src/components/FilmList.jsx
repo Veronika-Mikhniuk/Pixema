@@ -17,7 +17,7 @@ export function FilmList({ type, endpoint }) {
 
     const getPaginationBaseUrl = () => {
         if (endpoint === 'search') {
-            return `/search/${searchQuery}/${type}`
+            return `/${type}/search/${searchQuery}`
         }
 
         if (endpoint === 'trending') {

@@ -89,28 +89,48 @@ export const router = createBrowserRouter([
                 ]
             },
             {
-                path: '/films/details/:id',
-                element: <FilmDetails type='films' />,
-            },
-            {
-                path: '/series/details/:id',
-                element: <FilmDetails type='series' />,
-            },
-            {
-                path: '/search/:query',
-                element: <SearchResult />,
+                path: '/films',
                 children: [
                     {
-                        path: '',
-                        element: <Navigate to="films/1" />
+                        path: 'details/:id',
+                        element: <FilmDetails type='films' />,
                     },
                     {
-                        path: 'films/:currentPage',
-                        element: <Films search />
+                        path: 'search/:query',
+                        element: <SearchResult />,
+                        children: [
+                            {
+                                path: '',
+                                element: <Navigate to="1" />
+                            },
+                            {
+                                path: ':currentPage',
+                                element: <Films search />
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                path: '/series',
+                children: [
+                    {
+                        path: 'details/:id',
+                        element: <FilmDetails type='series' />,
                     },
                     {
-                        path: 'series/:currentPage',
-                        element: <Series search />
+                        path: 'search/:query',
+                        element: <SearchResult />,
+                        children: [
+                            {
+                                path: '',
+                                element: <Navigate to="1" />
+                            },
+                            {
+                                path: ':currentPage',
+                                element: <Series search />
+                            }
+                        ]
                     }
                 ]
             },

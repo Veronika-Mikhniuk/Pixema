@@ -22,7 +22,7 @@ export function SearchForm() {
         event.preventDefault()
         dispatch(setSearchQuery(query))
         const encodedQuery = encodeURIComponent(query)
-        navigate(`/search/${encodedQuery}/films/1`)
+        navigate(`/films/search/${encodedQuery}/1`)
     }
 
     const handleClear = (event) => {
