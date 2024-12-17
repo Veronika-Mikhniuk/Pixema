@@ -4,12 +4,17 @@ import { useSelector } from 'react-redux'
 import '@/styles/tabSwitcher.scss'
 
 export function TabSwitcher({ path = '' }) {
-    const { query } = useParams() // subscripton on path changes! without it don't work
+    const { query } = useParams() // subscription on path changes! without it don't work
     const searchQuery = useSelector(state => state.films.searchQuery)
+    const { activeFilters } = useSelector(state => state.films)
 
     const getPath = (type) => {
         if (path === 'search' && searchQuery) {
             return `/${type}/search/${searchQuery}/1`
+        }
+        if (activeFilters) {
+            const searchParams = new URLSearchParams(activeFilters).toString()
+            return `/${type}/1?${searchParams}`
         }
         switch (path) {
             case 'popular':

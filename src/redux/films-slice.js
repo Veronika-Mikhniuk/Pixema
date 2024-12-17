@@ -8,6 +8,7 @@ const initialState = {
     pageCount: null,
     currentFilm: null,
     searchQuery: null,
+    activeFilters: null,
     genres: [],
     genresLoading: false,
     genresError: null
@@ -58,6 +59,12 @@ export const filmsSlice = createSlice({
     reducers: {
         setSearchQuery: (state, action) => {
             state.searchQuery = action.payload
+        },
+        setActiveFilters: (state, action) => {
+            state.activeFilters = action.payload
+        },
+        clearFilters: (state) => {
+            state.activeFilters = null
         }
     },
     extraReducers: (builder) => {
@@ -106,5 +113,5 @@ export const filmsSlice = createSlice({
     }
 })
 
-export const { setSearchQuery } = filmsSlice.actions
+export const { setSearchQuery, setActiveFilters, clearFilters } = filmsSlice.actions
 export const filmsReducer = filmsSlice.reducer 

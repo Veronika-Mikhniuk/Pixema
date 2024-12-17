@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation, useParams, useSearchParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchFilms } from '@/redux/films-slice'
 import { maxPageLimit } from '@/config/api'
@@ -11,6 +11,7 @@ export function FilmList({ type, endpoint }) {
     const { currentPage } = useParams()
     const dispatch = useDispatch()
     const location = useLocation()
+    const [searchParams] = useSearchParams() // take queryparams from url
     const { list: films, loading, error, pageCount, searchQuery } = useSelector(state => state.films)
 
     const avaliablePageCount = Math.min(pageCount, maxPageLimit)
@@ -20,7 +21,7 @@ export function FilmList({ type, endpoint }) {
             return `/${type}/search/${searchQuery}`
         }
 
-        if (endpoint === 'trending') {
+        if (endpoint === 'trending' || endpoint === 'all') {
             return `/${type}`
         }
         return `/${endpoint}/${type}`
@@ -28,14 +29,15 @@ export function FilmList({ type, endpoint }) {
 
     useEffect(() => {
         dispatch(fetchGenres())
+        const filterParams = Object.fromEntries(searchParams) // transform queryparams from url into object
 
         if (endpoint === 'search' && searchQuery) {
             dispatch(fetchFilms({ type, endpoint, query: searchQuery, page: currentPage }))
         } else {
-            dispatch(fetchFilms({ type, endpoint, page: currentPage }))
+            dispatch(fetchFilms({ type, endpoint, ...filterParams, page: currentPage }))
         }
 
-    }, [currentPage, searchQuery, dispatch])
+    }, [currentPage, searchQuery, searchParams, dispatch, endpoint])
 
     if (loading) return <h2>Loading...</h2>
     if (error) return <h2>Error: {error}</h2>

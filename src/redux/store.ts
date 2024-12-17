@@ -6,3 +6,5 @@ export const store = configureStore({
         films: filmsReducer
     }
 })
+
+export type RootState = ReturnType<typeof store.getState>

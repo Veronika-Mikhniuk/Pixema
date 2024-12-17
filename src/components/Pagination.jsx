@@ -1,9 +1,10 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { buildSchemePagination } from '@/utils/buildSchemePagination'
 import '@/styles/pagination.scss'
 
 export function Pagination({ currentPage, pageCount, url }) {
     const navigate = useNavigate()
+    const location = useLocation()
     const currentPageNumber = Number(currentPage)
 
     const renderPaginationItems = () => {
@@ -14,7 +15,10 @@ export function Pagination({ currentPage, pageCount, url }) {
                 <li className="pagination__item" key={index}>
                     {item == '...'
                         ? <span className="pagination__dots">...</span>
-                        : <NavLink className={({ isActive }) => isActive ? "pagination__link pagination__link_active" : "pagination__link"} to={`${url}/${item}`}>{item}</NavLink>}
+                        : <NavLink
+                            className={({ isActive }) => isActive ? "pagination__link pagination__link_active" : "pagination__link"}
+                            to={`${url}/${item}${location.search}`}>{item}
+                        </NavLink>}
                 </li >
             )
         })
@@ -22,13 +26,13 @@ export function Pagination({ currentPage, pageCount, url }) {
 
     const handlePrevClick = () => {
         if (currentPageNumber > 1) {
-            navigate(`${url}/${currentPageNumber - 1}`)
+            navigate(`${url}/${currentPageNumber - 1}${location.search}`)
         }
     }
 
     const handleNextClick = () => {
         if (currentPageNumber < pageCount) {
-            navigate(`${url}/${currentPageNumber + 1}`)
+            navigate(`${url}/${currentPageNumber + 1}${location.search}`)
         }
     }
 

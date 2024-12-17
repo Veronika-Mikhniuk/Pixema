@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { icons } from '@/assets/icons'
 import { PageType, IMenuItem } from '@/types/MenuTypes'
 import { Footer } from '@/components/Footer'
+import { RootState } from '@/redux/store'
 import '@/styles/leftMenuPanel.scss'
 
 export function LeftMenuPanel() {
     const [hoveredItem, setHoveredItem] = useState<PageType | null>(null)
     const location = useLocation()
+    const { activeFilters } = useSelector((state: RootState) => state.films)
 
-    const isLinkActive = (path: string) => {
+    const isLinkActive = (path: string): boolean => {
         // return true or false
         if (path === '/') {
             return location.pathname.startsWith('/films') || location.pathname.startsWith('/series')
@@ -26,7 +29,15 @@ export function LeftMenuPanel() {
         { path: '/settings', page: 'settings', text: 'Settings' },
     ]
 
-    const getIconSrc = (page: PageType, isActive: boolean, isHovered: boolean) => {
+    const getPath = (path: string): string => {
+        if (path === '/' && activeFilters) {
+            const searchParams = new URLSearchParams(activeFilters).toString()
+            return `/films/1?${searchParams}`
+        }
+        return path
+    }
+
+    const getIconSrc = (page: PageType, isActive: boolean, isHovered: boolean): string => {
         return isActive || isHovered ? icons.nav[page].active : icons.nav[page].default
     }
 
@@ -38,7 +49,7 @@ export function LeftMenuPanel() {
                         {menuItems.map(item => ( // mapping based on menuItems
                             <li key={item.page}>
                                 <NavLink
-                                    to={item.path}
+                                    to={getPath(item.path)}
                                     className={() => isLinkActive(item.path) ? 'active' : ''}
                                     onMouseEnter={() => setHoveredItem(item.page)}
                                     onMouseLeave={() => setHoveredItem(null)}
