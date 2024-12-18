@@ -1,27 +1,29 @@
+@use './variables.scss';
+
 .filter-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: flex-end;
-    z-index: 1000;
+    z-index: 1;
 }
 
 .filter-panel {
     width: 400px;
     height: 100%;
-    background: var(--background-block);
+    background-color: var(--background-primary);
     animation: slideIn 0.3s ease;
+    border-radius: 20px 0 0 20px;
 
     &__header {
         padding: 24px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid var(--border-block);
 
         h2 {
             font-size: 24px;
@@ -34,6 +36,7 @@
         border: none;
         cursor: pointer;
         color: var(--text-secondary);
+        font-weight: 800;
         padding: 4px;
         display: flex;
         align-items: center;
@@ -56,56 +59,10 @@
         flex-direction: column;
     }
 
-    // -----------
-    .filter-group {
-        margin-bottom: 24px;
-
-        label {
-            display: block;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-
-        select,
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--border-block);
-            border-radius: 8px;
-            background-color: var(--background-block);
-            color: var(--text-primary);
-            font-size: 16px;
-            transition: border-color 0.3s;
-
-            &:focus {
-                outline: none;
-                border-color: var(--accent-color);
-            }
-
-            &::placeholder {
-                color: var(--text-secondary);
-            }
-        }
-
-        .filter-range {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-
-            input {
-                width: 100%;
-            }
-        }
-    }
-
-    // -----------
-
     &__actions {
         padding: 24px;
         display: flex;
         gap: 16px;
-        border-top: 1px solid var(--border-block);
     }
 
     &__button {
@@ -118,23 +75,80 @@
         transition: all 0.3s;
 
         &_clear {
-            background: var(--background-secondary);
+            background-color: var(--background-secondary);
             color: var(--text-primary);
 
             &:hover {
-                background: var(--border-block);
+                filter: brightness(0.9);
             }
         }
 
         &_apply {
-            background: var(--accent-color);
+            background-color: var(--accent-color);
             color: white;
 
             &:hover {
-                background: var(--accent-color-hover);
+                background-color: var(--accent-color-hover);
             }
         }
     }
+}
+
+.filter-group {
+    margin-bottom: 24px;
+
+    label {
+        display: block;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+
+    select,
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid var(--border-block);
+        border-radius: 8px;
+        background-color: var(--background-block);
+        color: var(--text-primary);
+        font-size: 16px;
+        transition: border-color 0.3s;
+
+        &:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        &::placeholder {
+            color: var(--text-secondary);
+        }
+    }
+}
+
+.filter-genres {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+
+        input {
+            cursor: pointer;
+            width: auto;
+            margin-right: 10px;
+        }
+    }
+}
+
+.filter-range {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
 }
 
 @keyframes slideIn {

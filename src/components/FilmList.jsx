@@ -6,13 +6,14 @@ import { maxPageLimit } from '@/config/api'
 import { FilmGrid } from './FilmsGrid'
 import { Pagination } from '@/components/Pagination'
 import { fetchGenres } from '@/redux/films-slice.js'
+import { convertUrlFilterParams } from '@/utils/prepareFilterParams'
 
 export function FilmList({ type, endpoint }) {
     const { currentPage } = useParams()
     const dispatch = useDispatch()
     const location = useLocation()
     const [searchParams] = useSearchParams() // take queryparams from url
-    const { list: films, loading, error, pageCount, searchQuery } = useSelector(state => state.films)
+    const { list: films, loading, error, pageCount, searchQuery, activeFilters } = useSelector(state => state.films)
 
     const avaliablePageCount = Math.min(pageCount, maxPageLimit)
 
@@ -30,6 +31,7 @@ export function FilmList({ type, endpoint }) {
     useEffect(() => {
         dispatch(fetchGenres())
         const filterParams = Object.fromEntries(searchParams) // transform queryparams from url into object
+        const preparedFilterParams = convertUrlFilterParams(filterParams, type) // change params depending on films or series path
 
         if (endpoint === 'search' && searchQuery) {
             dispatch(fetchFilms({ type, endpoint, query: searchQuery, page: currentPage }))

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { convertUrlFilterParams } from '@/utils/prepareFilterParams'
 import '@/styles/tabSwitcher.scss'
 
 export function TabSwitcher({ path = '' }) {
@@ -13,7 +14,8 @@ export function TabSwitcher({ path = '' }) {
             return `/${type}/search/${searchQuery}/1`
         }
         if (activeFilters) {
-            const searchParams = new URLSearchParams(activeFilters).toString()
+            const convertedParams = convertUrlFilterParams(activeFilters, type) // change params depending on films or series path
+            const searchParams = new URLSearchParams(convertedParams).toString()
             return `/${type}/1?${searchParams}`
         }
         switch (path) {

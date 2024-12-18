@@ -4,7 +4,6 @@ import { User } from '@/components/User'
 import { SearchForm } from '@/components/SearchForm'
 import logoDarkTheme from '@/assets/logo/pixema-logo-dark-theme.svg'
 import logoLightTheme from '@/assets/logo/pixema-logo-light-theme.svg'
-import filterIcon from '@/assets/icons/filter-button-icon.svg'
 
 import '@/styles/header.scss'
 

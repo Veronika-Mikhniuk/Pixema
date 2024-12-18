@@ -7,7 +7,8 @@ import favouritePageActive from './favorites-page-icon-active.svg'
 import settingsPageDefault from './settings-page-icon.svg'
 import settingsPageActive from './settings-page-icon-active.svg'
 import profileDropdown from './profile-dropdown-icon.svg'
-import filterDefault from './profile-dropdown-icon.svg'
+import filterDefault from './filter-button-icon.svg'
+import filterActive from './filter-button-icon-active.svg'
 import darkThemeDefault from './theme-off-icon.svg'
 import darkThemeActive from './theme-on-icon.svg'
 
@@ -45,8 +46,8 @@ export const icons: IIcons = {
         dropdown: profileDropdown //TODO: Change
     },
     searchFilter: {
-        active: filterDefault,
-        default: filterDefault //TODO: Change
+        active: filterActive,
+        default: filterDefault
     },
     darkTheme: {
         active: darkThemeActive,

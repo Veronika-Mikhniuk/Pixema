@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams, useLocation } from "react-router-dom"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setSearchQuery } from '@/redux/films-slice'
+import { clearFilters } from '@/redux/films-slice'
 import { FilterPanel } from '@/components/FilterPanel'
-import filterIcon from '@/assets/icons/filter-button-icon.svg'
+import { icons } from '@/assets/icons'
 import '@/styles/searchForm.scss'
 
 export function SearchForm() {
@@ -11,6 +12,7 @@ export function SearchForm() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
+    const { activeFilters } = useSelector(state => state.films)
 
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     const [query, setQuery] = useState(() => {
@@ -44,6 +46,7 @@ export function SearchForm() {
         if (!query.trim()) return
 
         dispatch(setSearchQuery(query))
+        dispatch(clearFilters())
         const encodedQuery = encodeURIComponent(query)
         navigate(`/films/search/${encodedQuery}/1`)
     }
@@ -72,7 +75,7 @@ export function SearchForm() {
                     onClick={handleFilterClick}
                     disabled={location.pathname.includes('/search')}
                 >
-                    <img src={filterIcon} alt="icon" />
+                    <img src={activeFilters ? icons.searchFilter.active : icons.searchFilter.default} alt="icon" />
                 </button>
             </form>
 

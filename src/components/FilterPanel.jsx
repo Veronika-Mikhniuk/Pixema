@@ -1,16 +1,19 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { fetchFilms } from '@/redux/films-slice'
 import { setActiveFilters, clearFilters } from '@/redux/films-slice'
+import { prepareFilterParams } from '@/utils/prepareFilterParams'
 import '@/styles/filterPanel.scss'
 
 export function FilterPanel({ isOpen, onClose }) {
     const panelRef = useRef(null)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const activeFilters = useSelector(state => state.films.activeFilters)
+    const location = useLocation()
+    const { activeFilters } = useSelector(state => state.films)
+    const { genres } = useSelector(state => state.films)
 
     const { register, handleSubmit, reset } = useForm() // methods from useForms react-hook-form
 
@@ -27,39 +30,35 @@ export function FilterPanel({ isOpen, onClose }) {
                 document.removeEventListener('mousedown', handleClickOutside)
             }
         }
-    }, [isOpen, onClose])
+
+        if (isOpen) {
+            dispatch(fetchGenres())
+        }
+
+        if (!activeFilters) reset()
+    }, [isOpen, onClose, activeFilters])
 
     if (!isOpen) return null
 
     const onSubmit = (data) => {
-        // Preparing params for backend request
-        const apiParams = {
-            sort_by: data.sortBy,
-            'primary_release_date.gte': data.yearFrom ? `${data.yearFrom}-01-01` : '',
-            'primary_release_date.lte': data.yearTo ? `${data.yearTo}-12-31` : '',
-            'vote_average.gte': data.ratingFrom || '',
-            'vote_average.lte': data.ratingTo || '',
-            with_origin_country: data.country || ''
-        }
-
-        // Cleaning empty values
-        const cleanApiParams = Object.fromEntries(
-            Object.entries(apiParams).filter(([_, value]) => value !== '')
-        )
-
-        // save filter data to redux
-        dispatch(setActiveFilters(cleanApiParams))
-
-
-        const searchParams = new URLSearchParams(cleanApiParams).toString()
         const isFilmsRoute = location.pathname.includes('/films/')
         const routeType = isFilmsRoute ? 'films' : 'series'
+        console.log(routeType)
+
+        // Preparing params for backend request
+        const apiParams = prepareFilterParams(data, routeType)
+
+        // save filter data to redux
+        dispatch(setActiveFilters(apiParams))
+
+
+        const searchParams = new URLSearchParams(apiParams).toString()
         navigate(`/${routeType}/1?${searchParams}`)
 
         dispatch(fetchFilms({
             type: routeType,
             endpoint: 'all',
-            ...cleanApiParams
+            ...apiParams
         }))
 
         onClose()
@@ -93,7 +92,7 @@ export function FilterPanel({ isOpen, onClose }) {
                         onClick={onClose}
                         aria-label="Close filters"
                     >
-                        x
+                        Х
                     </button>
                 </div>
 
@@ -111,6 +110,22 @@ export function FilterPanel({ isOpen, onClose }) {
                                 <option value="vote_average.desc">Rating (High to Low)</option>
                                 <option value="vote_average.asc">Rating (Low to High)</option>
                             </select>
+                        </div>
+
+                        <div className="filter-group">
+                            <label>Genres</label>
+                            <div className="filter-genres">
+                                {genres.map(genre => (
+                                    <label key={genre.id} className="filter-genres__item">
+                                        <input
+                                            type="checkbox"
+                                            {...register('genres')}
+                                            value={genre.id}
+                                        />
+                                        {genre.name}
+                                    </label>
+                                ))}
+                            </div>
                         </div>
 
                         <div className="filter-group">
