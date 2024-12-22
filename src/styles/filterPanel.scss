@@ -13,7 +13,7 @@
 }
 
 .filter-panel {
-    width: 400px;
+    width: 500px;
     height: 100%;
     background-color: var(--background-primary);
     animation: slideIn 0.3s ease;
@@ -92,63 +92,6 @@
             }
         }
     }
-}
-
-.filter-group {
-    margin-bottom: 24px;
-
-    label {
-        display: block;
-        color: var(--text-secondary);
-        margin-bottom: 8px;
-        font-size: 16px;
-    }
-
-    select,
-    input {
-        width: 100%;
-        padding: 12px;
-        border: 2px solid var(--border-block);
-        border-radius: 8px;
-        background-color: var(--background-block);
-        color: var(--text-primary);
-        font-size: 16px;
-        transition: border-color 0.3s;
-
-        &:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
-
-        &::placeholder {
-            color: var(--text-secondary);
-        }
-    }
-}
-
-.filter-genres {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-
-    &__item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-
-        input {
-            cursor: pointer;
-            width: auto;
-            margin-right: 10px;
-        }
-    }
-}
-
-.filter-range {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
 }
 
 @keyframes slideIn {

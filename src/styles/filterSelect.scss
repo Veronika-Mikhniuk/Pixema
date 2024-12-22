@@ -1,0 +1,32 @@
+@use './variables.scss';
+
+.filter-group {
+    margin-bottom: 24px;
+
+    label {
+        display: flex;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid var(--border-block);
+        border-radius: 8px;
+        background-color: var(--background-block);
+        color: var(--text-primary);
+        font-size: 16px;
+        transition: border-color 0.3s;
+
+        &:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        &::placeholder {
+            color: var(--text-secondary);
+        }
+    }
+}

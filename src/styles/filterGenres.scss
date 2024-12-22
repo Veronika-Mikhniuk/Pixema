@@ -1,0 +1,90 @@
+@use './variables.scss';
+
+.filter-group {
+    margin-bottom: 24px;
+
+    label {
+        display: flex;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid var(--border-block);
+        border-radius: 8px;
+        background-color: var(--background-block);
+        color: var(--text-primary);
+        font-size: 16px;
+        transition: border-color 0.3s;
+
+        &:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        &::placeholder {
+            color: var(--text-secondary);
+        }
+    }
+}
+
+.filter-genres {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+
+        input {
+            cursor: pointer;
+            width: auto;
+            margin-right: 10px;
+            display: none;
+        }
+
+        input:checked+.custom-checkbox {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+
+            &::after {
+                display: block;
+            }
+        }
+
+        .custom-checkbox {
+            display: flex;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-block);
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.2s;
+            flex-shrink: 0;
+
+            &:hover {
+                border-color: var(--accent-color);
+            }
+
+            // check mark
+            &::after {
+                content: '';
+                position: absolute;
+                display: none;
+                left: 5px;
+                top: 1px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
+            }
+        }
+    }
+}
