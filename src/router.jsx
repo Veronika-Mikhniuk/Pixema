@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
 import { Layout } from '@/components/Layout'
+import { AuthLayout } from '@/components/AuthLayout'
 import { Home } from '@/pages/Home'
 import { Films } from '@/pages/Films'
 import { Series } from '@/pages/Series'
@@ -11,8 +12,24 @@ import { TopRated } from '@/pages/TopRated'
 import { Upcoming } from '@/pages/Upcoming'
 import { SearchResult } from '@/pages/SearchResult'
 import { FilmDetails } from '@/components/FilmDetails'
+import { SignIn } from '@/pages/SignIn'
+import { SignUp } from '@/pages/SignUp'
 
 export const router = createBrowserRouter([
+    {
+        path: '/auth',
+        element: <AuthLayout />,
+        children: [
+            {
+                path: 'sign-in',
+                element: <SignIn />
+            },
+            {
+                path: 'sign-up',
+                element: <SignUp />
+            }
+        ]
+    },
     {
         element: <Layout />,
         children: [
