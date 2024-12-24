@@ -11,6 +11,7 @@ export function LeftMenuPanel() {
     const [hoveredItem, setHoveredItem] = useState<PageType | null>(null)
     const location = useLocation()
     const { activeFilters } = useSelector((state: RootState) => state.films)
+    const { sessionId } = useSelector((state: RootState) => state.auth)
 
     const isLinkActive = (path: string): boolean => {
         // return true or false
@@ -25,7 +26,11 @@ export function LeftMenuPanel() {
         { path: '/popular', page: 'popular', text: 'Popular' },
         { path: '/topRated', page: 'topRated', text: 'Top Rated' },
         { path: '/upcoming', page: 'upcoming', text: 'Upcoming' },
-        { path: '/favourites', page: 'favourite', text: 'Favourites' },
+        ...(sessionId ? [{
+            path: '/favourites',
+            page: 'favourite' as PageType,
+            text: 'Favourites'
+        }] : []),
         { path: '/settings', page: 'settings', text: 'Settings' },
     ]
 

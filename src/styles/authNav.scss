@@ -1,0 +1,21 @@
+@use './variables.scss';
+
+.auth-nav {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    min-width: 264px;
+    gap: 3px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+        text-decoration: none;
+        color: var(--text-primary);
+    }
+
+    span {
+        color: var(--text-primary);
+    }
+}
