@@ -1,4 +1,4 @@
-import { apiConfig, filmsEndpoints, defaultParams } from '@/config/api'
+import { apiConfig, apiEndpoints, defaultParams } from '@/config/api'
 
 export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...params } = {}) => {
     try {
@@ -7,7 +7,7 @@ export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...p
             ...params
         }).toString()
 
-        const baseEndpoint = type === 'films' ? filmsEndpoints.films : filmsEndpoints.series
+        const baseEndpoint = type === 'films' ? apiEndpoints.films : apiEndpoints.series
         const advancedEndpoint = baseEndpoint[endpoint]
         const url = `${apiConfig.baseUrl}${advancedEndpoint}?${queryParams}`
 
@@ -36,7 +36,7 @@ export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...p
 
 export const requestFilm = async ({ id, type = 'films' } = {}) => {
     try {
-        const endpoint = type === 'films' ? filmsEndpoints.films.details : filmsEndpoints.series.details
+        const endpoint = type === 'films' ? apiEndpoints.films.details : apiEndpoints.series.details
         const url = `${apiConfig.baseUrl}${endpoint}/${id}?language=en-US`
 
         const response = await fetch(url, {

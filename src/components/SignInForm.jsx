@@ -1,24 +1,35 @@
 import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { fetchSignIn, clearError } from '@/redux/auth-slice'
 import '@/styles/signInForm.scss'
 
 export function SignInForm() {
     const navigate = useNavigate()
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting }
-    } = useForm()
+    const dispatch = useDispatch()
+    const { sessionId, loading, error } = useSelector(state => state.auth)
+
+    const { register, handleSubmit, formState: { errors }, watch } = useForm({
+        mode: "onBlur"
+    })
+
+    // clear error when changing fields
+    useEffect(() => {
+        const subscription = watch(() => {
+            dispatch(clearError())
+        })
+        return () => subscription.unsubscribe() // when unmount - stop watching fields
+    }, [watch])
+
+    useEffect(() => {
+        if (sessionId) {
+            navigate('/')
+        }
+    }, [sessionId])
 
     const onSubmit = async (data) => {
-        try {
-            // Здесь будет логика авторизации
-            await new Promise(resolve => setTimeout(resolve, 2000))
-            console.log('Form data:', data)
-            navigate('/') // редирект на главную
-        } catch (error) {
-            console.error(error)
-        }
+        dispatch(fetchSignIn(data))
     }
 
     return (
@@ -68,10 +79,11 @@ export function SignInForm() {
             <button
                 type="submit"
                 className="auth-form__submit"
-                disabled={isSubmitting}
+                disabled={loading}
             >
-                {isSubmitting ? 'Signing in...' : 'Sign In'}
+                {loading ? 'Signing in...' : 'Sign In'}
             </button>
+            {error && <p className="auth-form__auth-error">{error}</p>}
 
             <p className="auth-form__footer">
                 Don't have an account? {' '}

@@ -3,7 +3,7 @@ export const apiConfig = {
     token: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlY2IyMWNlMzhhODkxZWIzNDEzOWUzNjE3YTYwZjYxZCIsIm5iZiI6MTczMzYxMDE0OS43MDU5OTk5LCJzdWIiOiI2NzU0Y2FhNTJlNDc5M2NlOTY0OTY1NTEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.TCiQRxVf7UTCnikYs41wUUyv4YEVn2yF_PbzDNZV_xM'
 }
 
-export const filmsEndpoints = {
+export const apiEndpoints = {
     films: {
         all: '/discover/movie', // have filtering queryParams
         trending: '/trending/movie/week', // have day or week param
@@ -26,6 +26,11 @@ export const filmsEndpoints = {
         details: '/tv',
         search: '/search/tv'
     },
+    auth: {
+        requestToken: '/authentication/token/new',
+        validateWithLogin: '/authentication/token/validate_with_login',
+        createSession: '/authentication/session/new'
+    }
 }
 
 export const defaultParams = {
