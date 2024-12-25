@@ -22,6 +22,7 @@ export function FilterPanel({ isOpen, onClose }) {
 
     const { register, handleSubmit, reset, formState: { errors, isValid }, watch, clearErrors } = useForm({ // methods from useForms react-hook-form
         mode: 'onBlur', // Validation on missing focus
+        reValidateMode: 'onBlur'
     })
 
     const ratingFrom = watch('ratingFrom')
@@ -63,7 +64,6 @@ export function FilterPanel({ isOpen, onClose }) {
     const onSubmit = (data) => {
         const isFilmsRoute = location.pathname.includes('/films/')
         const routeType = isFilmsRoute ? 'films' : 'series'
-        console.log(routeType)
 
         // Preparing params for backend request
         const apiParams = prepareFilterParams(data, routeType)

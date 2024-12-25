@@ -11,7 +11,7 @@ import { Settings } from '@/pages/Settings'
 import { TopRated } from '@/pages/TopRated'
 import { Upcoming } from '@/pages/Upcoming'
 import { SearchResult } from '@/pages/SearchResult'
-import { FilmDetails } from '@/components/FilmDetails'
+import { Film } from '@/pages/Film'
 import { SignIn } from '@/pages/SignIn'
 import { SignUp } from '@/pages/SignUp'
 
@@ -110,7 +110,7 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: 'details/:id',
-                        element: <FilmDetails type='films' />,
+                        element: <Film type="films" />,
                     },
                     {
                         path: 'search/:query',
@@ -133,7 +133,7 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: 'details/:id',
-                        element: <FilmDetails type='series' />,
+                        element: <Film type="series" />,
                     },
                     {
                         path: 'search/:query',

@@ -18,6 +18,11 @@
         }
     }
 
+    &__image {
+        min-width: 300px;
+        min-height: 450px;
+    }
+
     &__favorite-btn {
         padding: 16px;
         border-radius: 10px;

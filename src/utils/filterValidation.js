@@ -14,9 +14,13 @@ export const createFilterValidation = (watch) => {
                 value: new Date().getFullYear(),
                 message: `Year cannot be later than ${new Date().getFullYear()}`
             },
-            validate: (value) =>
-                !yearTo || Number(value) <= Number(yearTo) ||
-                'Can\'t be more than end year'
+            validate: (value) => {
+                // Проверяем только если заполнены оба поля
+                if (value && yearTo) {
+                    return Number(value) <= Number(yearTo) || 'Can\'t be more than end year'
+                }
+                return true
+            }
         },
         yearTo: {
             min: {
@@ -27,9 +31,12 @@ export const createFilterValidation = (watch) => {
                 value: new Date().getFullYear(),
                 message: `Year cannot be later than ${new Date().getFullYear()}`
             },
-            validate: (value) =>
-                !yearFrom || Number(value) >= Number(yearFrom) ||
-                'Can\'t be less than start year'
+            validate: (value) => {
+                if (value && yearFrom) {
+                    return Number(value) >= Number(yearFrom) || 'Can\'t be less than start year'
+                }
+                return true
+            }
         },
         ratingFrom: {
             min: {
@@ -40,9 +47,12 @@ export const createFilterValidation = (watch) => {
                 value: 10,
                 message: 'Rating cannot be more than 10'
             },
-            validate: (value) =>
-                !ratingTo || Number(value) <= Number(ratingTo) ||
-                'Can\'t be more than end rating'
+            validate: (value) => {
+                if (value && ratingTo) {
+                    return Number(value) <= Number(ratingTo) || 'Can\'t be more than end rating'
+                }
+                return true
+            }
         },
         ratingTo: {
             min: {
@@ -53,9 +63,12 @@ export const createFilterValidation = (watch) => {
                 value: 10,
                 message: 'Rating cannot be more than 10'
             },
-            validate: (value) =>
-                !ratingFrom || Number(value) >= Number(ratingFrom) ||
-                'Can\'t be less than start rating'
+            validate: (value) => {
+                if (value && ratingFrom) {
+                    return Number(value) >= Number(ratingFrom) || 'Can\'t be less than start rating'
+                }
+                return true
+            }
         }
     }
 }

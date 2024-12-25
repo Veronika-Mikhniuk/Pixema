@@ -44,11 +44,15 @@ export function FilmList({ type, endpoint }) {
     if (loading) return <h2>Loading...</h2>
     if (error) return <h2>Error: {error}</h2>
 
-    if (endpoint === 'search' && films.length === 0) {
+    if (films.length === 0) {
         return (
             <div className="no-results">
-                <h2>No {type === 'films' ? 'films' : 'series'} found</h2>
-                <p>We couldn't find any {type === 'films' ? 'films' : 'TV series'} matching "{searchQuery}"</p>
+                <h2 style={{ margin: '0 0 20px' }}>No {type === 'films' ? 'films' : 'series'} found</h2>
+                {endpoint === 'search' ? (
+                    <p>We couldn't find any {type === 'films' ? 'films' : 'TV series'} matching "{searchQuery}"</p>
+                ) : (
+                    <p>No {type === 'films' ? 'films' : 'TV series'} available with current filters</p>
+                )}
             </div>
         )
     }

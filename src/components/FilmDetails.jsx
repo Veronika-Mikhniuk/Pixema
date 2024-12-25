@@ -7,6 +7,7 @@ import { Title } from '@/components/Title'
 import { Rating } from '@/components/Rating'
 import { icons } from '@/assets/icons'
 import { formatDate } from '@/utils/formatDate'
+import noImage from '@/assets/backgrounds/no-image-background.jpg'
 import '@/styles/filmDetails.scss'
 
 export function FilmDetails({ type }) {
@@ -28,7 +29,11 @@ export function FilmDetails({ type }) {
         <div className="film-details">
             <div className="film-details__poster">
                 <img
-                    src={`${baseImgUrl}w500${currentFilm.poster_path}`}
+                    className="film-details__image"
+                    src={currentFilm.poster_path
+                        ? `${baseImgUrl}w500${currentFilm.poster_path}`
+                        : noImage
+                    }
                     alt={currentFilm.title || currentFilm.name}
                 />
                 <button

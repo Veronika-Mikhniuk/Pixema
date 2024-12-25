@@ -14,11 +14,23 @@ export function LeftMenuPanel() {
     const { sessionId } = useSelector((state: RootState) => state.auth)
 
     const isLinkActive = (path: string): boolean => {
-        // return true or false
+        const currentPath = location.pathname
+        const previousPath = location.state?.from
+
+        if (currentPath.includes('/details/')) {
+            if (path === '/') {
+                return previousPath?.startsWith('/films/') ||
+                    previousPath?.startsWith('/series/') ||
+                    previousPath === '/'
+            }
+            return path === (previousPath ? `/${previousPath.split('/')[1]}` : '/')
+        }
+
         if (path === '/') {
             return location.pathname.startsWith('/films') || location.pathname.startsWith('/series')
         }
-        return location.pathname.startsWith(path)
+
+        return currentPath.startsWith(path)
     }
 
     const menuItems: IMenuItem[] = [

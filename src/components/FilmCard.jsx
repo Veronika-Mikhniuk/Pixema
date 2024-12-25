@@ -3,6 +3,7 @@ import { useLocation, NavLink } from 'react-router-dom'
 import { baseImgUrl } from '@/config/api'
 import { Title } from '@/components/Title'
 import { Rating } from '@/components/Rating'
+import noImage from '@/assets/backgrounds/no-image-background.jpg'
 import '@/styles/filmCard.scss'
 
 export function FilmCard({ film }) {
@@ -22,10 +23,13 @@ export function FilmCard({ film }) {
     }
 
     return (
-        <NavLink to={`/${type}/details/${film.id}`} className="film-card">
+        <NavLink to={`/${type}/details/${film.id}`} className="film-card" state={{ from: location.pathname }}>
             <div className="film-card__poster-container">
                 <img
-                    src={`${baseImgUrl}w500${film.poster_path}`}
+                    src={film.poster_path
+                        ? `${baseImgUrl}w500${film.poster_path}`
+                        : noImage
+                    }
                     alt={film.title}
                     className="film-card__poster"
                 />
