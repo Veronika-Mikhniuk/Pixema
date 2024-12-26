@@ -1,6 +1,7 @@
 import { FilmCard } from '@/components/FilmCard'
+import { IFilm } from '@/types/IFilm'
 
-export function FilmGrid({ films }) {
+export function FilmGrid({ films }: { films: IFilm[] }) {
     return (
         <div className="film-grid"
             style={{

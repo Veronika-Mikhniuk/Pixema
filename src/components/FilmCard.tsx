@@ -4,22 +4,22 @@ import { baseImgUrl } from '@/config/api'
 import { Title } from '@/components/Title'
 import { Rating } from '@/components/Rating'
 import noImage from '@/assets/backgrounds/no-image-background.jpg'
+import { IFilm } from '@/types/IFilm'
+import { IGenre } from '@/types/IGenre'
+import { RootState } from '@/redux/store'
 import '@/styles/filmCard.scss'
 
-export function FilmCard({ film }) {
-    const { genres } = useSelector(state => state.films)
+export function FilmCard({ film }: { film: IFilm }) {
+    const { genres } = useSelector((state: RootState) => state.films) as { genres: IGenre[] }
     const location = useLocation()
     const type = location.pathname.includes('films') ? 'films' : 'series'
 
-    const getRatingValue = (rating) => {
-        return rating ? rating.toFixed(1) : 'no rating'
-    }
 
-    const getGenreNames = () => {
+    const getGenreNames = (): string => {
         return film.genre_ids
             ?.map(id => genres.find(genre => genre.id === id)?.name)
             .filter(Boolean)
-            .join(' · ')
+            .join(' · ') || ''
     }
 
     return (

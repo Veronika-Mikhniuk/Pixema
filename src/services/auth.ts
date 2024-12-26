@@ -1,6 +1,20 @@
 import { apiConfig, apiEndpoints } from '@/config/api'
 
-export const requestAuthToken = async () => {
+interface IAuthTokenResponse {
+    success?: boolean;
+    request_token?: string;
+    hasError?: boolean;
+    message?: string;
+}
+
+interface ISessionResponse {
+    success?: boolean;
+    session_id?: string;
+    hasError?: boolean;
+    message?: string;
+}
+
+export const requestAuthToken = async (): Promise<IAuthTokenResponse> => {
     try {
         const url = `${apiConfig.baseUrl}${apiEndpoints.auth.requestToken}`
 
@@ -19,14 +33,24 @@ export const requestAuthToken = async () => {
 
     } catch (error) {
         console.log(error)
+        if (error instanceof Error) {
+            return {
+                hasError: true,
+                message: error.message
+            }
+        }
         return {
             hasError: true,
-            message: error.message,
+            message: 'An unknown error occurred'
         }
     }
 }
 
-export const requestValidateTokenWithLogin = async (username, password, requestToken) => {
+export const requestValidateTokenWithLogin = async (
+    username: string,
+    password: string,
+    requestToken: string
+): Promise<IAuthTokenResponse> => {
     try {
         const url = `${apiConfig.baseUrl}${apiEndpoints.auth.validateWithLogin}`
 
@@ -58,14 +82,20 @@ export const requestValidateTokenWithLogin = async (username, password, requestT
 
     } catch (error) {
         console.log(error)
+        if (error instanceof Error) {
+            return {
+                hasError: true,
+                message: error.message
+            }
+        }
         return {
             hasError: true,
-            message: error.message,
+            message: 'An unknown error occurred'
         }
     }
 }
 
-export const requestCreateSession = async (requestToken) => {
+export const requestCreateSession = async (requestToken: string): Promise<ISessionResponse> => {
     try {
         const url = `${apiConfig.baseUrl}${apiEndpoints.auth.createSession}`
 
@@ -89,9 +119,15 @@ export const requestCreateSession = async (requestToken) => {
 
     } catch (error) {
         console.log(error)
+        if (error instanceof Error) {
+            return {
+                hasError: true,
+                message: error.message
+            }
+        }
         return {
             hasError: true,
-            message: error.message,
+            message: 'An unknown error occurred'
         }
     }
 }

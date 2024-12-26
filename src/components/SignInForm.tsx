@@ -3,14 +3,17 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { fetchSignIn, clearError } from '@/redux/auth-slice'
+import { RootState } from '@/redux/store'
+import { AppDispatch } from '@/redux/store'
+import { ISignInFormInputs } from '@/types/ISignInFormInputs'
 import '@/styles/signInForm.scss'
 
 export function SignInForm() {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const { sessionId, loading, error } = useSelector(state => state.auth)
+    const dispatch = useDispatch<AppDispatch>()
+    const { sessionId, loading, error } = useSelector((state: RootState) => state.auth)
 
-    const { register, handleSubmit, formState: { errors }, watch } = useForm({
+    const { register, handleSubmit, formState: { errors }, watch } = useForm<ISignInFormInputs>({
         mode: "onBlur"
     })
 
@@ -28,7 +31,7 @@ export function SignInForm() {
         }
     }, [sessionId])
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data: ISignInFormInputs) => {
         dispatch(fetchSignIn(data))
     }
 
