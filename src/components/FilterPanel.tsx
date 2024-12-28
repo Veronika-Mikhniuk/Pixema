@@ -31,11 +31,8 @@ export function FilterPanel({ isOpen, onClose }: IFilterPanelProps) {
         reValidateMode: 'onBlur'
     })
 
-    // Need to be, cause without it fields don't watched
-    const ratingFrom = watch('ratingFrom')
-    const ratingTo = watch('ratingTo')
-    const yearFrom = watch('yearFrom')
-    const yearTo = watch('yearTo')
+    // @ts-ignore - Fields watching required for form validation
+    const watchedFields = watch(['ratingFrom', 'ratingTo', 'yearFrom', 'yearTo'])
     const validation = createFilterValidation(watch)
 
     // If form fully valid - clear all errors
