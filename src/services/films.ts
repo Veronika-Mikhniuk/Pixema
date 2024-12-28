@@ -1,11 +1,16 @@
 import { apiConfig, apiEndpoints, defaultParams } from '@/config/api'
+import { IRequestFilmsParams, IRequestFilmParams, IRequestResponse } from '@/types/FilmsServiceTypes'
 
-export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...params } = {}) => {
+export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...params }: IRequestFilmsParams = {}): Promise<IRequestResponse> => {
     try {
-        const queryParams = new URLSearchParams({
-            ...defaultParams,
-            ...params
-        }).toString()
+        const queryParams = new URLSearchParams(
+            Object.fromEntries(
+                Object.entries({
+                    ...defaultParams,
+                    ...params
+                }).map(([key, value]) => [key, String(value)])
+            )
+        ).toString()
 
         const baseEndpoint = type === 'films' ? apiEndpoints.films : apiEndpoints.series
         const advancedEndpoint = baseEndpoint[endpoint]
@@ -27,14 +32,20 @@ export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...p
 
     } catch (error) {
         console.log(error)
+        if (error instanceof Error) {
+            return {
+                hasError: true,
+                message: error.message
+            }
+        }
         return {
             hasError: true,
-            message: error.message,
+            message: 'Unknown error'
         }
     }
 }
 
-export const requestFilm = async ({ id, type = 'films' } = {}) => {
+export const requestFilm = async ({ id, type = 'films' }: IRequestFilmParams = {}): Promise<IRequestResponse> => {
     try {
         const endpoint = type === 'films' ? apiEndpoints.films.details : apiEndpoints.series.details
         const url = `${apiConfig.baseUrl}${endpoint}/${id}?language=en-US`
@@ -55,14 +66,20 @@ export const requestFilm = async ({ id, type = 'films' } = {}) => {
 
     } catch (error) {
         console.log(error)
+        if (error instanceof Error) {
+            return {
+                hasError: true,
+                message: error.message
+            }
+        }
         return {
             hasError: true,
-            message: error.message,
+            message: 'Unknown error'
         }
     }
 }
 
-export const requestGenres = async () => {
+export const requestGenres = async (): Promise<IRequestResponse> => {
     try {
         const url = `${apiConfig.baseUrl}/genre/movie/list?language=en`
 
@@ -82,9 +99,15 @@ export const requestGenres = async () => {
 
     } catch (error) {
         console.log(error)
+        if (error instanceof Error) {
+            return {
+                hasError: true,
+                message: error.message
+            }
+        }
         return {
             hasError: true,
-            message: error.message,
+            message: 'Unknown error'
         }
     }
 }

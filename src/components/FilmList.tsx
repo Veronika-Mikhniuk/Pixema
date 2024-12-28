@@ -1,23 +1,29 @@
-import { useState, useEffect } from 'react'
-import { useLocation, useParams, useSearchParams } from "react-router-dom"
+import { useEffect } from 'react'
+import { useParams, useSearchParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchFilms } from '@/redux/films-slice'
 import { maxPageLimit } from '@/config/api'
 import { FilmGrid } from './FilmsGrid'
 import { Pagination } from '@/components/Pagination'
-import { fetchGenres } from '@/redux/films-slice.js'
+import { fetchGenres } from '@/redux/films-slice'
 import { convertUrlFilterParams } from '@/utils/prepareFilterParams'
+import { RootState } from '@/redux/store'
+import { AppDispatch } from '@/redux/store'
 
-export function FilmList({ type, endpoint }) {
+interface IFilmListProps {
+    type: 'films' | 'series'
+    endpoint: 'search' | 'trending' | 'all' | 'popular' | 'topRated' | 'upcoming'
+}
+
+export function FilmList({ type, endpoint }: IFilmListProps) {
     const { currentPage } = useParams()
-    const dispatch = useDispatch()
-    const location = useLocation()
+    const dispatch = useDispatch<AppDispatch>()
     const [searchParams] = useSearchParams() // take queryparams from url
-    const { list: films, loading, error, pageCount, searchQuery, activeFilters } = useSelector(state => state.films)
+    const { list: films, loading, error, pageCount, searchQuery } = useSelector((state: RootState) => state.films)
 
-    const avaliablePageCount = Math.min(pageCount, maxPageLimit)
+    const avaliablePageCount = Math.min(pageCount || 0, maxPageLimit)
 
-    const getPaginationBaseUrl = () => {
+    const getPaginationBaseUrl = (): string => {
         if (endpoint === 'search') {
             return `/${type}/search/${searchQuery}`
         }
@@ -36,7 +42,7 @@ export function FilmList({ type, endpoint }) {
         if (endpoint === 'search' && searchQuery) {
             dispatch(fetchFilms({ type, endpoint, query: searchQuery, page: currentPage }))
         } else {
-            dispatch(fetchFilms({ type, endpoint, ...filterParams, page: currentPage }))
+            dispatch(fetchFilms({ type, endpoint, ...preparedFilterParams, page: currentPage }))
         }
 
     }, [currentPage, searchQuery, searchParams, dispatch, endpoint])
@@ -61,7 +67,7 @@ export function FilmList({ type, endpoint }) {
         <>
             <FilmGrid films={films} />
             <Pagination
-                currentPage={currentPage}
+                currentPage={currentPage ?? '1'}
                 pageCount={avaliablePageCount}
                 url={getPaginationBaseUrl()} />
         </>

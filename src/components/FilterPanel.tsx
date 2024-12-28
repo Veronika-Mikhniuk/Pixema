@@ -6,25 +6,32 @@ import { SortByFilter } from '@/components/FilterSortBy'
 import { CountryFilter } from '@/components/FilterCountry'
 import { GenresFilter } from '@/components/FilterGenres'
 import { RangeFilter } from '@/components/FilterRange'
-import { fetchFilms } from '@/redux/films-slice'
-import { setActiveFilters, clearFilters } from '@/redux/films-slice'
+import { fetchFilms, fetchGenres, setActiveFilters, clearFilters } from '@/redux/films-slice'
 import { prepareFilterParams } from '@/utils/prepareFilterParams'
 import { createFilterValidation } from '@/utils/filterValidation'
+import { RootState } from '@/redux/store'
+import { AppDispatch } from '@/redux/store'
+import { IFilterFormData } from '@/types/IFilterParams'
 import '@/styles/filterPanel.scss'
 
-export function FilterPanel({ isOpen, onClose }) {
-    const panelRef = useRef(null)
-    const dispatch = useDispatch()
+interface IFilterPanelProps {
+    isOpen: boolean
+    onClose: () => void
+}
+
+export function FilterPanel({ isOpen, onClose }: IFilterPanelProps) {
+    const panelRef = useRef<HTMLDivElement>(null)
+    const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
     const location = useLocation()
-    const { activeFilters } = useSelector(state => state.films)
-    const { genres } = useSelector(state => state.films)
+    const { genres, activeFilters } = useSelector((state: RootState) => state.films)
 
-    const { register, handleSubmit, reset, formState: { errors, isValid }, watch, clearErrors } = useForm({ // methods from useForms react-hook-form
-        mode: 'onBlur', // Validation on missing focus
+    const { register, handleSubmit, reset, formState: { errors, isValid }, watch, clearErrors } = useForm<IFilterFormData>({
+        mode: 'onBlur',
         reValidateMode: 'onBlur'
     })
 
+    // Need to be, cause without it fields don't watched
     const ratingFrom = watch('ratingFrom')
     const ratingTo = watch('ratingTo')
     const yearFrom = watch('yearFrom')
@@ -39,8 +46,8 @@ export function FilterPanel({ isOpen, onClose }) {
     }, [isValid, clearErrors])
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (panelRef.current && !panelRef.current.contains(event.target)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
                 onClose()
             }
         }
@@ -61,7 +68,7 @@ export function FilterPanel({ isOpen, onClose }) {
 
     if (!isOpen) return null
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: IFilterFormData) => {
         const isFilmsRoute = location.pathname.includes('/films/')
         const routeType = isFilmsRoute ? 'films' : 'series'
 

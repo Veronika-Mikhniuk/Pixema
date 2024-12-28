@@ -8,14 +8,16 @@ import { Rating } from '@/components/Rating'
 import { icons } from '@/assets/icons'
 import { formatDate } from '@/utils/formatDate'
 import noImage from '@/assets/backgrounds/no-image-background.jpg'
+import { RootState } from '@/redux/store'
+import { AppDispatch } from '@/redux/store'
 import '@/styles/filmDetails.scss'
 
-export function FilmDetails({ type }) {
+export function FilmDetails({ type }: { type: 'films' | 'series' }) {
     const [isHovered, setIsHovered] = useState(false)
 
     const { id } = useParams()
-    const dispatch = useDispatch()
-    const { currentFilm, loading, error } = useSelector(state => state.films)
+    const dispatch = useDispatch<AppDispatch>()
+    const { currentFilm, loading, error } = useSelector((state: RootState) => state.films)
 
     useEffect(() => {
         dispatch(fetchFilm({ type, id }))
@@ -62,7 +64,7 @@ export function FilmDetails({ type }) {
 
                         </div>
                     }
-                    {currentFilm.runtime > 0 && (
+                    {currentFilm.runtime !== undefined && currentFilm.runtime > 0 && (
                         <div className="film-details__runtime">
                             {currentFilm.runtime} min
                         </div>
@@ -79,19 +81,23 @@ export function FilmDetails({ type }) {
                         <dd>{currentFilm.status}</dd>
                     </dl>
 
-                    <dl className="film-details__info-item">
-                        <dt>Release Date</dt>
-                        <dd>{formatDate(currentFilm.release_date || currentFilm.first_air_date)}</dd>
-                    </dl>
+                    {(currentFilm.release_date || currentFilm.first_air_date) && (
+                        <dl className="film-details__info-item">
+                            <dt>Release Date</dt>
+                            <dd>
+                                {formatDate(currentFilm.release_date || currentFilm.first_air_date as string)}
+                            </dd>
+                        </dl>
+                    )}
 
-                    {currentFilm.production_countries?.length > 0 && (
+                    {currentFilm.production_countries && currentFilm.production_countries.length > 0 && (
                         <dl className="film-details__info-item">
                             <dt>Countries</dt>
                             <dd>{currentFilm.production_countries.map(country => country.name).join(', ')}</dd>
                         </dl>
                     )}
 
-                    {currentFilm.production_companies?.length > 0 && (
+                    {currentFilm.production_companies && currentFilm.production_companies.length > 0 && (
                         <dl className="film-details__info-item">
                             <dt>Production</dt>
                             <dd>{currentFilm.production_companies.map(company => company.name).join(', ')}</dd>

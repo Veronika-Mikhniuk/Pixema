@@ -1,5 +1,5 @@
 import { UseFormRegister } from 'react-hook-form'
-import { IFilterFormValues } from '@/types/IFilterFormValues'
+import { IFilterFormData } from '@/types/IFilterParams'
 import { IGenre } from '@/types/IGenre'
 import '@/styles/filterGenres.scss'
 
@@ -7,7 +7,7 @@ export function GenresFilter({
     register,
     genres
 }: {
-    register: UseFormRegister<IFilterFormValues>;
+    register: UseFormRegister<IFilterFormData>;
     genres: IGenre[];
 }) {
     return (

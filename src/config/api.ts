@@ -1,9 +1,11 @@
-export const apiConfig = {
+import { IApiConfig, IApiEndpoints, IDefaultParams } from '@/types/ApiTypes'
+
+export const apiConfig: IApiConfig = {
     baseUrl: 'https://api.themoviedb.org/3',
-    token: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlY2IyMWNlMzhhODkxZWIzNDEzOWUzNjE3YTYwZjYxZCIsIm5iZiI6MTczMzYxMDE0OS43MDU5OTk5LCJzdWIiOiI2NzU0Y2FhNTJlNDc5M2NlOTY0OTY1NTEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.TCiQRxVf7UTCnikYs41wUUyv4YEVn2yF_PbzDNZV_xM'
+    token: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmZiNjI1MjllOTc3ZWJlMDBhMWZkZTk5NmVjMWM1OSIsIm5iZiI6MTczNTI5MTkzMS40MzEsInN1YiI6IjY3NmU3NDFiMmM5MDk3YjI2NjYxNTZhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6X3ZOVLGvs0yiyVdspjCJ1zLfKH9r_6_rL-Em0XNe0U'
 }
 
-export const apiEndpoints = {
+export const apiEndpoints: IApiEndpoints = {
     films: {
         all: '/discover/movie', // have filtering queryParams
         trending: '/trending/movie/week', // have day or week param
@@ -33,7 +35,7 @@ export const apiEndpoints = {
     }
 }
 
-export const defaultParams = {
+export const defaultParams: IDefaultParams = {
     include_adult: false,
     include_video: false,
     language: 'en-US',
@@ -41,4 +43,4 @@ export const defaultParams = {
 
 export const baseImgUrl = 'https://image.tmdb.org/t/p/'
 
-export const maxPageLimit = 500 //according to api docs
+export const maxPageLimit = 500 //according to api docs 

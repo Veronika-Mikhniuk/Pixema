@@ -1,7 +1,15 @@
 import { FilmList } from '@/components/FilmList'
 import { useLocation } from 'react-router-dom'
 
-export function Series({ trending, popular, topRated, upcoming, search }) {
+interface IFilmsProps {
+    trending?: boolean
+    popular?: boolean
+    topRated?: boolean
+    upcoming?: boolean
+    search?: boolean
+}
+
+export function Series({ trending, popular, topRated, upcoming, search }: IFilmsProps) {
     const type = 'series'
     const location = useLocation()
 

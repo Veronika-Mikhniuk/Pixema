@@ -2,13 +2,19 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { buildSchemePagination } from '@/utils/buildSchemePagination'
 import '@/styles/pagination.scss'
 
-export function Pagination({ currentPage, pageCount, url }) {
+interface IPaginationProps {
+    currentPage: string | number
+    pageCount: number
+    url: string
+}
+
+export function Pagination({ currentPage, pageCount, url }: IPaginationProps) {
     const navigate = useNavigate()
     const location = useLocation()
     const currentPageNumber = Number(currentPage)
 
     const renderPaginationItems = () => {
-        const scheme = buildSchemePagination(currentPage, pageCount)
+        const scheme = buildSchemePagination(currentPageNumber, pageCount)
 
         return scheme.map((item, index) => {
             return (

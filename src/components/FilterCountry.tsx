@@ -1,8 +1,8 @@
 import { UseFormRegister } from 'react-hook-form'
-import { IFilterFormValues } from '@/types/IFilterFormValues'
+import { IFilterFormData } from '@/types/IFilterParams'
 import '@/styles/filterSelect.scss'
 
-export function CountryFilter({ register }: { register: UseFormRegister<IFilterFormValues> }) {
+export function CountryFilter({ register }: { register: UseFormRegister<IFilterFormData> }) {
     return (
         <div className="filter-group">
             <label>Country</label>

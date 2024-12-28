@@ -1,15 +1,19 @@
 import { NavLink } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { convertUrlFilterParams } from '@/utils/prepareFilterParams'
+import { RootState } from '@/redux/store'
 import '@/styles/tabSwitcher.scss'
 
-export function TabSwitcher({ path = '' }) {
-    const { query } = useParams() // subscription on path changes! without it don't work
-    const searchQuery = useSelector(state => state.films.searchQuery)
-    const { activeFilters } = useSelector(state => state.films)
+interface ITabSwitcherProps {
+    path?: '' | 'search' | 'popular' | 'topRated' | 'upcoming'
+}
 
-    const getPath = (type) => {
+type ContentType = 'films' | 'series'
+
+export function TabSwitcher({ path = '' }: ITabSwitcherProps) {
+    const { searchQuery, activeFilters } = useSelector((state: RootState) => state.films)
+
+    const getPath = (type: ContentType): string => {
         if (path === 'search' && searchQuery) {
             return `/${type}/search/${searchQuery}/1`
         }

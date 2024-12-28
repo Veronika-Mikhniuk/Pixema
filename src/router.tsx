@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, RouteObject } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
 import { Layout } from '@/components/Layout'
 import { AuthLayout } from '@/components/AuthLayout'
@@ -15,7 +15,7 @@ import { Film } from '@/pages/Film'
 import { SignIn } from '@/pages/SignIn'
 import { SignUp } from '@/pages/SignUp'
 
-export const router = createBrowserRouter([
+const routes: RouteObject[] = [
     {
         path: '/auth',
         element: <AuthLayout />,
@@ -161,4 +161,6 @@ export const router = createBrowserRouter([
             }
         ]
     },
-])
+]
+
+export const router = createBrowserRouter(routes)

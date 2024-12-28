@@ -1,4 +1,7 @@
-export const createFilterValidation = (watch) => {
+import { UseFormWatch } from 'react-hook-form'
+import { IFilterFormData } from '@/types/IFilterParams'
+
+export const createFilterValidation = (watch: UseFormWatch<IFilterFormData>) => {
     const ratingFrom = watch('ratingFrom')
     const ratingTo = watch('ratingTo')
     const yearFrom = watch('yearFrom')
@@ -14,8 +17,7 @@ export const createFilterValidation = (watch) => {
                 value: new Date().getFullYear(),
                 message: `Year cannot be later than ${new Date().getFullYear()}`
             },
-            validate: (value) => {
-                // Проверяем только если заполнены оба поля
+            validate: (value?: string) => {
                 if (value && yearTo) {
                     return Number(value) <= Number(yearTo) || 'Can\'t be more than end year'
                 }
@@ -31,7 +33,7 @@ export const createFilterValidation = (watch) => {
                 value: new Date().getFullYear(),
                 message: `Year cannot be later than ${new Date().getFullYear()}`
             },
-            validate: (value) => {
+            validate: (value?: string) => {
                 if (value && yearFrom) {
                     return Number(value) >= Number(yearFrom) || 'Can\'t be less than start year'
                 }
@@ -47,7 +49,7 @@ export const createFilterValidation = (watch) => {
                 value: 10,
                 message: 'Rating cannot be more than 10'
             },
-            validate: (value) => {
+            validate: (value?: string) => {
                 if (value && ratingTo) {
                     return Number(value) <= Number(ratingTo) || 'Can\'t be more than end rating'
                 }
@@ -63,7 +65,7 @@ export const createFilterValidation = (watch) => {
                 value: 10,
                 message: 'Rating cannot be more than 10'
             },
-            validate: (value) => {
+            validate: (value?: string) => {
                 if (value && ratingFrom) {
                     return Number(value) >= Number(ratingFrom) || 'Can\'t be less than start rating'
                 }
