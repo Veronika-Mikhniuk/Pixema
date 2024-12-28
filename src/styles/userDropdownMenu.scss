@@ -1,0 +1,34 @@
+@use './variables.scss';
+
+.dropdown {
+    position: relative;
+
+    &__menu {
+        position: absolute;
+        right: -30px;
+        top: 20px;
+        margin-top: 8px;
+        width: 205px;
+        border-radius: 12px;
+        background-color: var(--background-primary);
+        border: 2px solid var(--border-block);
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    &__button {
+        width: 100%;
+        padding: 8px 16px;
+        text-align: left;
+        color: var(--text-primary);
+        font-size: 15px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: var(--background-dropdown-item);
+        }
+    }
+}

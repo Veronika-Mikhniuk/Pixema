@@ -14,6 +14,7 @@ import { SearchResult } from '@/pages/SearchResult'
 import { Film } from '@/pages/Film'
 import { SignIn } from '@/pages/SignIn'
 import { SignUp } from '@/pages/SignUp'
+import { Profile } from '@/pages/Profile'
 
 const routes: RouteObject[] = [
     {
@@ -154,6 +155,10 @@ const routes: RouteObject[] = [
             {
                 path: '/favourites',
                 element: <Favourites />,
+            },
+            {
+                path: '/profile',
+                element: <Profile />,
             },
             {
                 path: '/settings',

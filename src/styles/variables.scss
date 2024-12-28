@@ -7,6 +7,7 @@ html[data-theme='dark'] {
     --border-input: #323537;
 
     --background-block: #242426;
+    --background-dropdown-item: #242426;
     --border-block: #242426;
 
     --text-primary: #cbd0d6;
@@ -26,6 +27,7 @@ html[data-theme='light'] {
     --border-input: #AFB2B6;
 
     --background-block: var(--background-primary);
+    --background-dropdown-item: #f0f0f0;
     --border-block: #AFB2B6;
 
     --text-primary: #353535;

@@ -1,8 +1,12 @@
+import { useState, useRef } from 'react'
 import { getInitials } from '@/utils/getInitials'
-import '@/styles/user.scss'
+import { UserDropdownMenu } from '@/components/UserDropdownMenu'
 import profileDropdownIcon from '@/assets/icons/profile-dropdown-icon.svg'
+import '@/styles/user.scss'
 
 export function User({ username }: { username: string }) {
+    const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
+    const buttonRef = useRef<HTMLButtonElement>(null)
     const initials: string = username ? getInitials(username) : 'U'
 
     return (
@@ -11,9 +15,19 @@ export function User({ username }: { username: string }) {
                 <span>{initials}</span>
             </div>
             <p className="user__name">{username || "User"}</p>
-            <button type="button" className="user__dropdown-button">
+            <button
+                ref={buttonRef}
+                type="button"
+                className="user__dropdown-button"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
                 <img src={profileDropdownIcon} alt="*" />
             </button>
+            <UserDropdownMenu
+                isOpen={isDropdownOpen}
+                onClose={() => setIsDropdownOpen(false)}
+                buttonRef={buttonRef}
+            />
         </div>
     )
 }

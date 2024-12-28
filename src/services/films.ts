@@ -81,21 +81,42 @@ export const requestFilm = async ({ id, type = 'films' }: IRequestFilmParams = {
 
 export const requestGenres = async (): Promise<IRequestResponse> => {
     try {
-        const url = `${apiConfig.baseUrl}/genre/movie/list?language=en`
+        const filmsUrl = `${apiConfig.baseUrl}/genre/movie/list?language=en`
+        const seriesUrl = `${apiConfig.baseUrl}/genre/tv/list?language=en`
 
-        const response = await fetch(url, {
-            headers: {
-                'Authorization': `Bearer ${apiConfig.token}`,
-                'accept': 'application/json'
-            }
-        })
+        const [filmsResponse, seriesResponse] = await Promise.all([
+            fetch(filmsUrl, {
+                headers: {
+                    'Authorization': `Bearer ${apiConfig.token}`,
+                    'accept': 'application/json'
+                }
+            }),
+            fetch(seriesUrl, {
+                headers: {
+                    'Authorization': `Bearer ${apiConfig.token}`,
+                    'accept': 'application/json'
+                }
+            })
+        ])
 
-        if (!response.ok) {
+        if (!filmsResponse.ok || !seriesResponse.ok) {
             throw new Error('Failed to fetch genres')
         }
 
-        const data = await response.json()
-        return data
+        const [filmsData, seriesData] = await Promise.all([
+            filmsResponse.json(),
+            seriesResponse.json()
+        ])
+
+        // Combining genres, removing duplicates by id
+        const allGenres = [...filmsData.genres, ...seriesData.genres]
+        const uniqueGenres = Array.from(
+            new Map(allGenres.map(genre => [genre.id, genre])).values()
+        )
+
+        return {
+            genres: uniqueGenres
+        }
 
     } catch (error) {
         console.log(error)
