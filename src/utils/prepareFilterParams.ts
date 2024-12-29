@@ -1,4 +1,4 @@
-import { IFilterFormData, IApiParams } from "@/types/IFilterParams"
+import { IFilterFormData, IApiParams } from '@/types/IFilterParams'
 
 type ContentType = 'films' | 'series'
 

@@ -1,4 +1,4 @@
-import { ThemeSettings } from "@/components/ThemeSettings"
+import { ThemeSettings } from '@/components/ThemeSettings'
 
 export function Settings() {
     return (
