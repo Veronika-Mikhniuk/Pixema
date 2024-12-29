@@ -1,0 +1,34 @@
+@use './variables.scss';
+
+.profile {
+    &__card {
+        margin-top: 16px;
+        padding: 24px 40px;
+        background-color: var(--background-block);
+        border-radius: 10px;
+        border: 2px solid var(--border-block);
+    }
+
+    &__info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-block);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &__label {
+        font-size: 16px;
+        color: var(--text-secondary);
+    }
+
+    &__value {
+        font-size: 16px;
+        color: var(--text-primary);
+        margin: 0;
+    }
+}

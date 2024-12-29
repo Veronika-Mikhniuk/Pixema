@@ -1,18 +1,5 @@
 import { apiConfig, apiEndpoints } from '@/config/api'
-
-interface IAuthTokenResponse {
-    success?: boolean;
-    request_token?: string;
-    hasError?: boolean;
-    message?: string;
-}
-
-interface ISessionResponse {
-    success?: boolean;
-    session_id?: string;
-    hasError?: boolean;
-    message?: string;
-}
+import { IAuthTokenResponse, ISessionResponse, IAccountDetailsResponse } from '@/types/AuthServiceTypes'
 
 export const requestAuthToken = async (): Promise<IAuthTokenResponse> => {
     try {
@@ -128,6 +115,45 @@ export const requestCreateSession = async (requestToken: string): Promise<ISessi
         return {
             hasError: true,
             message: 'An unknown error occurred'
+        }
+    }
+}
+
+export const requestAccountDetails = async (sessionId: string): Promise<IAccountDetailsResponse> => {
+    try {
+        const url = `${apiConfig.baseUrl}/account?session_id=${sessionId}`
+
+        const response = await fetch(url, {
+            headers: {
+                'Authorization': `Bearer ${apiConfig.token}`,
+                'accept': 'application/json'
+            }
+        })
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch account details')
+        }
+
+        const data = await response.json()
+        return {
+            id: data.id,
+            username: data.username,
+            name: data.name,
+            language: data.iso_639_1,
+            country: data.iso_3166_1
+        }
+
+    } catch (error) {
+        console.log(error)
+        if (error instanceof Error) {
+            return {
+                hasError: true,
+                message: error.message
+            }
+        }
+        return {
+            hasError: true,
+            message: 'Unknown error'
         }
     }
 }

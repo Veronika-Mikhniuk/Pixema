@@ -20,6 +20,7 @@ export interface IApiEndpoints {
         requestToken: string
         validateWithLogin: string
         createSession: string
+        getAccount: string
     }
 }
 

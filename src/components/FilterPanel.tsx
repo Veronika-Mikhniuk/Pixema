@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form'
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'

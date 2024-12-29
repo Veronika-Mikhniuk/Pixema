@@ -9,5 +9,5 @@ export interface IFilterFormData {
 }
 
 export interface IApiParams {
-    [key: string]: string;
+    [key: string]: string
 }

@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { requestAuthToken, requestValidateTokenWithLogin, requestCreateSession } from '@/services/auth'
+import { requestAuthToken, requestValidateTokenWithLogin, requestCreateSession, requestAccountDetails } from '@/services/auth'
+import { IAccountDetails } from '@/types/IAccountDetails'
 
 interface IAuthState {
     sessionId: string | null
     username: string | null
+    accountData: IAccountDetails | null
     loading: boolean
     error: string | null
 }
@@ -11,14 +13,20 @@ interface IAuthState {
 const initialState: IAuthState = {
     sessionId: localStorage.getItem('sessionId'),
     username: localStorage.getItem('username'),
+    accountData: null,
     loading: false,
     error: null
 
 }
 
+interface IErrorResponse {
+    hasError: boolean
+    message: string
+}
+
 export const fetchSignIn = createAsyncThunk<
-    { username: string; sessionId: string }, // type of returned data
-    { username: string; password: string },  // type of input parameters
+    { username: string, sessionId: string }, // type of returned data
+    { username: string, password: string },  // type of input parameters
     { rejectValue: { message: string } }     // type of rejection error
 >(
     'auth/fetchSignIn',
@@ -67,6 +75,23 @@ export const fetchSignIn = createAsyncThunk<
     }
 )
 
+export const fetchAccountDetails = createAsyncThunk<
+    { id?: number, username?: string, name?: string },
+    string,
+    { rejectValue: { message: string } }
+>(
+    'auth/fetchAccountDetails',
+    async (sessionId, { rejectWithValue }) => {
+        const data = await requestAccountDetails(sessionId)
+
+        if (data.hasError) {
+            return rejectWithValue(data as IErrorResponse)
+        }
+
+        return data
+    }
+)
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -83,13 +108,14 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            //signIn
             .addCase(fetchSignIn.pending, (state) => {
                 state.loading = true
                 state.error = null
             })
             .addCase(fetchSignIn.fulfilled, (
                 state,
-                action: PayloadAction<{ username: string; sessionId: string }>
+                action: PayloadAction<{ username: string, sessionId: string }>
             ) => {
                 state.loading = false
                 state.sessionId = action.payload.sessionId
@@ -98,6 +124,23 @@ const authSlice = createSlice({
                 localStorage.setItem('username', action.payload.username)
             })
             .addCase(fetchSignIn.rejected, (state, action: ReturnType<typeof fetchSignIn.rejected>) => {
+                state.loading = false
+                state.error = action.payload?.message || action.error.message || 'Unknown error'
+            })
+            //profileDetails
+            .addCase(fetchAccountDetails.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchAccountDetails.fulfilled, (
+                state,
+                action: PayloadAction<{ id?: number, username?: string, name?: string }>
+            ) => {
+                state.loading = false
+                state.accountData = action.payload
+
+            })
+            .addCase(fetchAccountDetails.rejected, (state, action: ReturnType<typeof fetchAccountDetails.rejected>) => {
                 state.loading = false
                 state.error = action.payload?.message || action.error.message || 'Unknown error'
             })

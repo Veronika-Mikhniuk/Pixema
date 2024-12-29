@@ -4,7 +4,7 @@ export interface IFilmDetails {
     name?: string
     poster_path?: string
     vote_average: number
-    genres?: { id: number; name: string }[]
+    genres?: { id: number, name: string }[]
     runtime?: number
     overview?: string
     status?: string

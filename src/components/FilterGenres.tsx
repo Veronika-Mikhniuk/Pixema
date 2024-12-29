@@ -7,8 +7,8 @@ export function GenresFilter({
     register,
     genres
 }: {
-    register: UseFormRegister<IFilterFormData>;
-    genres: IGenre[];
+    register: UseFormRegister<IFilterFormData>
+    genres: IGenre[]
 }) {
     return (
         <div className="filter-group">

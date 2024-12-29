@@ -31,7 +31,8 @@ export const apiEndpoints: IApiEndpoints = {
     auth: {
         requestToken: '/authentication/token/new',
         validateWithLogin: '/authentication/token/validate_with_login',
-        createSession: '/authentication/session/new'
+        createSession: '/authentication/session/new',
+        getAccount: '/account'
     }
 }
 
