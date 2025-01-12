@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchFilm } from '@/redux/films-slice'
+import { fetchAddToFavorites } from '@/redux/favorites-slice'
 import { baseImgUrl } from '@/config/api'
 import { Title } from '@/components/Title'
 import { Rating } from '@/components/Rating'
@@ -18,6 +19,8 @@ export function FilmDetails({ type }: { type: 'films' | 'series' }) {
     const { id } = useParams()
     const dispatch = useDispatch<AppDispatch>()
     const { currentFilm, loading, error } = useSelector((state: RootState) => state.films)
+    const { sessionId } = useSelector((state: RootState) => state.auth)
+    // const { loading: favoritesLoading } = useSelector((state: RootState) => state.favorites)
 
     useEffect(() => {
         dispatch(fetchFilm({ type, id }))
@@ -26,6 +29,20 @@ export function FilmDetails({ type }: { type: 'films' | 'series' }) {
     if (loading) return <h2>Loading...</h2>
     if (error) return <h2>Error: {error}</h2>
     if (!currentFilm) return null
+
+    const handleClickFavoriteButton = () => {
+        if (!sessionId) {
+            console.log('Пользователь не зарегистрирован')
+            // Добавить редирект на страницу логина или сообщение о том, что нужно зарегистрироваться
+            return
+        }
+
+        dispatch(fetchAddToFavorites({
+            mediaId: currentFilm.id,
+            mediaType: type === 'films' ? 'movie' : 'tv',
+            favorite: true
+        }))
+    }
 
     return (
         <div className="film-details">
@@ -42,6 +59,7 @@ export function FilmDetails({ type }: { type: 'films' | 'series' }) {
                     className="film-details__favorite-btn"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
+                    onClick={handleClickFavoriteButton}
                 >
                     <img src={isHovered ? icons.nav.favourite.active : icons.nav.favourite.default} alt="Add to favorites" />
                     Add to Favorites

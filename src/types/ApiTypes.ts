@@ -22,6 +22,13 @@ export interface IApiEndpoints {
         createSession: string
         getAccount: string
     }
+    account: {
+        favorites: {
+            add: string
+            getFilms: string
+            getSeries: string
+        }
+    }
 }
 
 export interface IDefaultParams {

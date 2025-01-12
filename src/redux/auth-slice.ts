@@ -4,6 +4,7 @@ import { IAccountDetails } from '@/types/IAccountDetails'
 
 interface IAuthState {
     sessionId: string | null
+    accountId: string | null
     username: string | null
     accountData: IAccountDetails | null
     loading: boolean
@@ -12,6 +13,7 @@ interface IAuthState {
 
 const initialState: IAuthState = {
     sessionId: localStorage.getItem('sessionId'),
+    accountId: localStorage.getItem('accountId'),
     username: localStorage.getItem('username'),
     accountData: null,
     loading: false,
@@ -25,7 +27,7 @@ interface IErrorResponse {
 }
 
 export const fetchSignIn = createAsyncThunk<
-    { username: string, sessionId: string }, // type of returned data
+    { username: string; sessionId: string; accountId: number }, // type of returned data
     { username: string, password: string },  // type of input parameters
     { rejectValue: { message: string } }     // type of rejection error
 >(
@@ -71,7 +73,21 @@ export const fetchSignIn = createAsyncThunk<
             })
         }
 
-        return { username, sessionId: sessionResponse.session_id }
+        // 4.get accountId
+        const accountResponse = await requestAccountDetails(sessionResponse.session_id);
+        if (accountResponse.hasError) {
+            return rejectWithValue({
+                message: accountResponse.message || 'Account error'
+            });
+        }
+
+        if (!accountResponse.id) {
+            return rejectWithValue({
+                message: 'No account ID received'
+            });
+        }
+
+        return { username, sessionId: sessionResponse.session_id, accountId: accountResponse.id }
     }
 )
 
@@ -101,8 +117,10 @@ const authSlice = createSlice({
         },
         signOut: (state) => {
             state.sessionId = null
+            state.accountId = null
             state.username = null
             localStorage.removeItem('sessionId')
+            localStorage.removeItem('accountId')
             localStorage.removeItem('username')
         }
     },
@@ -115,12 +133,14 @@ const authSlice = createSlice({
             })
             .addCase(fetchSignIn.fulfilled, (
                 state,
-                action: PayloadAction<{ username: string, sessionId: string }>
+                action: PayloadAction<{ username: string, sessionId: string, accountId: number }>
             ) => {
                 state.loading = false
                 state.sessionId = action.payload.sessionId
+                state.accountId = action.payload.accountId.toString()
                 state.username = action.payload.username
                 localStorage.setItem('sessionId', action.payload.sessionId)
+                localStorage.setItem('accountId', action.payload.accountId.toString())
                 localStorage.setItem('username', action.payload.username)
             })
             .addCase(fetchSignIn.rejected, (state, action: ReturnType<typeof fetchSignIn.rejected>) => {
@@ -138,7 +158,6 @@ const authSlice = createSlice({
             ) => {
                 state.loading = false
                 state.accountData = action.payload
-
             })
             .addCase(fetchAccountDetails.rejected, (state, action: ReturnType<typeof fetchAccountDetails.rejected>) => {
                 state.loading = false

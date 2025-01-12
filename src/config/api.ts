@@ -33,6 +33,13 @@ export const apiEndpoints: IApiEndpoints = {
         validateWithLogin: '/authentication/token/validate_with_login',
         createSession: '/authentication/session/new',
         getAccount: '/account'
+    },
+    account: {
+        favorites: {
+            add: '/account/{account_id}/favorite',
+            getFilms: '/account/{account_id}/favorite/movies',
+            getSeries: '/account/{account_id}/favorite/tv'
+        }
     }
 }
 
