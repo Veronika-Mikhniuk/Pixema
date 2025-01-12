@@ -1,7 +1,7 @@
 import { apiConfig, apiEndpoints, defaultParams } from '@/config/api'
 import { IRequestFilmsParams, IRequestFilmParams, IRequestResponse } from '@/types/FilmsServiceTypes'
 
-export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...params }: IRequestFilmsParams = {}): Promise<IRequestResponse> => {
+export const requestFilms = async ({ type = 'films', endpoint = 'trending', accountId, ...params }: IRequestFilmsParams = {}): Promise<IRequestResponse> => {
     try {
         const queryParams = new URLSearchParams(
             Object.fromEntries(
@@ -13,7 +13,15 @@ export const requestFilms = async ({ type = 'films', endpoint = 'trending', ...p
         ).toString()
 
         const baseEndpoint = type === 'films' ? apiEndpoints.films : apiEndpoints.series
-        const advancedEndpoint = baseEndpoint[endpoint]
+        let advancedEndpoint = baseEndpoint[endpoint]
+
+        if (endpoint === 'favourites') {
+            if (!accountId) {
+                throw new Error('Account ID is required for favorites')
+            }
+            advancedEndpoint = advancedEndpoint.replace('{account_id}', accountId)
+        }
+
         const url = `${apiConfig.baseUrl}${advancedEndpoint}?${queryParams}`
 
         const response = await fetch(url, {

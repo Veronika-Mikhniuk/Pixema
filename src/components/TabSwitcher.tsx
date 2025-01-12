@@ -5,7 +5,7 @@ import { RootState } from '@/redux/store'
 import '@/styles/tabSwitcher.scss'
 
 interface ITabSwitcherProps {
-    path?: '' | 'search' | 'popular' | 'topRated' | 'upcoming'
+    path?: '' | 'search' | 'popular' | 'topRated' | 'upcoming' | 'favourites'
 }
 
 type ContentType = 'films' | 'series'
@@ -26,6 +26,7 @@ export function TabSwitcher({ path = '' }: ITabSwitcherProps) {
             case 'popular':
             case 'topRated':
             case 'upcoming':
+            case 'favourites':
                 return `/${path}/${type}/1`
             default:
                 return `/${type}/1`

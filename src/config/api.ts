@@ -15,7 +15,8 @@ export const apiEndpoints: IApiEndpoints = {
         upcoming: '/movie/upcoming',
 
         details: '/movie',
-        search: '/search/movie'
+        search: '/search/movie',
+        favourites: '/account/{account_id}/favorite/movies'
     },
     series: {
         all: '/discover/tv', // have filtering queryParams
@@ -26,7 +27,8 @@ export const apiEndpoints: IApiEndpoints = {
         upcoming: '/tv/on_the_air',
 
         details: '/tv',
-        search: '/search/tv'
+        search: '/search/tv',
+        favourites: '/account/{account_id}/favorite/tv'
     },
     auth: {
         requestToken: '/authentication/token/new',
@@ -36,9 +38,7 @@ export const apiEndpoints: IApiEndpoints = {
     },
     account: {
         favorites: {
-            add: '/account/{account_id}/favorite',
-            getFilms: '/account/{account_id}/favorite/movies',
-            getSeries: '/account/{account_id}/favorite/tv'
+            add: '/account/{account_id}/favorite'
         }
     }
 }

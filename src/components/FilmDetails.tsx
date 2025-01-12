@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchFilm } from '@/redux/films-slice'
-import { fetchAddToFavorites } from '@/redux/favorites-slice'
+import { fetchAddToFavorites } from '@/redux/userActions-slice'
 import { baseImgUrl } from '@/config/api'
 import { Title } from '@/components/Title'
 import { Rating } from '@/components/Rating'
@@ -20,7 +20,6 @@ export function FilmDetails({ type }: { type: 'films' | 'series' }) {
     const dispatch = useDispatch<AppDispatch>()
     const { currentFilm, loading, error } = useSelector((state: RootState) => state.films)
     const { sessionId } = useSelector((state: RootState) => state.auth)
-    // const { loading: favoritesLoading } = useSelector((state: RootState) => state.favorites)
 
     useEffect(() => {
         dispatch(fetchFilm({ type, id }))
@@ -33,7 +32,7 @@ export function FilmDetails({ type }: { type: 'films' | 'series' }) {
     const handleClickFavoriteButton = () => {
         if (!sessionId) {
             console.log('Пользователь не зарегистрирован')
-            // Добавить редирект на страницу логина или сообщение о том, что нужно зарегистрироваться
+            // TODO: Добавить редирект на страницу логина или сообщение о том, что нужно зарегистрироваться
             return
         }
 

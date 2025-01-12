@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { requestAddToFavorites } from '@/services/favorites'
+import { requestAddToFavorites } from '@/services/userActions'
 import { IAddToFavoritesParams, IAddToFavoritesResponse } from '@/types/FavoritesServiceTypes'
 
 interface IFavoritesState {
@@ -57,7 +57,6 @@ export const favoritesSlice = createSlice({
             })
             .addCase(fetchAddToFavorites.fulfilled, (state) => {
                 state.loading = false
-
             })
             .addCase(fetchAddToFavorites.rejected, (state, action: ReturnType<typeof fetchAddToFavorites.rejected>) => {
                 state.loading = false

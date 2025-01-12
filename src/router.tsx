@@ -107,6 +107,24 @@ const routes: RouteObject[] = [
                 ]
             },
             {
+                path: '/favourites',
+                element: <Favourites />,
+                children: [
+                    {
+                        path: '',
+                        element: <Navigate to="films/1" />
+                    },
+                    {
+                        path: 'films/:currentPage',
+                        element: <Films favorites />
+                    },
+                    {
+                        path: 'series/:currentPage',
+                        element: <Series favorites />
+                    }
+                ]
+            },
+            {
                 path: '/films',
                 children: [
                     {
@@ -151,10 +169,6 @@ const routes: RouteObject[] = [
                         ]
                     }
                 ]
-            },
-            {
-                path: '/favourites',
-                element: <Favourites />,
             },
             {
                 path: '/profile',

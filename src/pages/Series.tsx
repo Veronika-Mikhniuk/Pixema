@@ -7,9 +7,10 @@ interface IFilmsProps {
     topRated?: boolean
     upcoming?: boolean
     search?: boolean
+    favorites?: boolean
 }
 
-export function Series({ trending, popular, topRated, upcoming, search }: IFilmsProps) {
+export function Series({ trending, popular, topRated, upcoming, search, favorites }: IFilmsProps) {
     const type = 'series'
     const location = useLocation()
 
@@ -24,6 +25,7 @@ export function Series({ trending, popular, topRated, upcoming, search }: IFilms
     if (topRated) return <FilmList type={type} endpoint='topRated' />
     if (upcoming) return <FilmList type={type} endpoint='upcoming' />
     if (search) return <FilmList type={type} endpoint='search' />
+    if (favorites) return <FilmList type={type} endpoint='favourites' />
 
     return <FilmList type={type} endpoint='all' />
 }

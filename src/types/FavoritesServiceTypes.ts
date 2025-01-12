@@ -1,6 +1,4 @@
 export interface IAddToFavoritesParams {
-    // accountId: string
-    // sessionId: string
     mediaId: number
     mediaType: 'movie' | 'tv'
     favorite: boolean

@@ -1,5 +1,11 @@
+import { Outlet } from 'react-router-dom'
+import { TabSwitcher } from '@/components/TabSwitcher'
+
 export function Favourites() {
     return (
-        <h1>Favourites</h1>
+        <>
+            <TabSwitcher path='favourites' />
+            <Outlet />
+        </>
     )
 }

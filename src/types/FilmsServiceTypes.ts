@@ -4,7 +4,8 @@ import { IGenre } from '@/types/IGenre'
 
 export interface IRequestFilmsParams {
     type?: 'films' | 'series'
-    endpoint?: 'all' | 'trending' | 'popular' | 'topRated' | 'upcoming' | 'details' | 'search'
+    endpoint?: 'all' | 'trending' | 'popular' | 'topRated' | 'upcoming' | 'details' | 'search' | 'favourites'
+    accountId?: string
     [key: string]: string | number | boolean | undefined
 }
 

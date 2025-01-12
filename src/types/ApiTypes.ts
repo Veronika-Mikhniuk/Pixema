@@ -11,6 +11,7 @@ export interface IEndpoints {
     upcoming: string
     details: string
     search: string
+    favourites: string
 }
 
 export interface IApiEndpoints {
@@ -25,8 +26,6 @@ export interface IApiEndpoints {
     account: {
         favorites: {
             add: string
-            getFilms: string
-            getSeries: string
         }
     }
 }

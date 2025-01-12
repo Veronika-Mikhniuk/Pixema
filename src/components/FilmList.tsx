@@ -12,7 +12,7 @@ import { AppDispatch } from '@/redux/store'
 
 interface IFilmListProps {
     type: 'films' | 'series'
-    endpoint: 'search' | 'trending' | 'all' | 'popular' | 'topRated' | 'upcoming'
+    endpoint: 'search' | 'trending' | 'all' | 'popular' | 'topRated' | 'upcoming' | 'favourites'
 }
 
 export function FilmList({ type, endpoint }: IFilmListProps) {
@@ -20,6 +20,7 @@ export function FilmList({ type, endpoint }: IFilmListProps) {
     const dispatch = useDispatch<AppDispatch>()
     const [searchParams] = useSearchParams() // take queryparams from url
     const { list: films, loading, error, pageCount, searchQuery } = useSelector((state: RootState) => state.films)
+    const { accountId } = useSelector((state: RootState) => state.auth)
 
     const avaliablePageCount = Math.min(pageCount || 0, maxPageLimit)
 
@@ -41,6 +42,8 @@ export function FilmList({ type, endpoint }: IFilmListProps) {
 
         if (endpoint === 'search' && searchQuery) {
             dispatch(fetchFilms({ type, endpoint, query: searchQuery, page: currentPage }))
+        } else if (endpoint === 'favourites' && accountId) {
+            dispatch(fetchFilms({ type, endpoint, accountId, page: currentPage }))
         } else {
             dispatch(fetchFilms({ type, endpoint, ...preparedFilterParams, page: currentPage }))
         }
