@@ -37,10 +37,32 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+        will-change: transform;
+
+        span {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .film-details__favorite-btn:hover & {
+                transform: scale(0.98); // compensation parent growth
+            }
+
+            color: inherit;
+        }
+
+        &.active {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
 
         &:hover {
             border-color: var(--accent-color);
             color: var(--accent-color);
+            transform: scale(1.02);
         }
 
         svg {

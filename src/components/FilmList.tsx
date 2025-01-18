@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { useParams, useSearchParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchFilms } from '@/redux/films-slice'
+import { fetchFavoriteIds, fetchFilms } from '@/redux/films-slice'
+import { updateFilmsList } from '@/redux/films-slice'
 import { maxPageLimit } from '@/config/api'
 import { FilmGrid } from './FilmsGrid'
 import { Pagination } from '@/components/Pagination'
@@ -19,8 +20,8 @@ export function FilmList({ type, endpoint }: IFilmListProps) {
     const { currentPage } = useParams()
     const dispatch = useDispatch<AppDispatch>()
     const [searchParams] = useSearchParams() // take queryparams from url
-    const { list: films, loading, error, pageCount, searchQuery } = useSelector((state: RootState) => state.films)
-    const { accountId } = useSelector((state: RootState) => state.auth)
+    const { list: films, loading, error, pageCount, searchQuery, favoriteIds } = useSelector((state: RootState) => state.films)
+    const { sessionId, accountId } = useSelector((state: RootState) => state.auth)
 
     const avaliablePageCount = Math.min(pageCount || 0, maxPageLimit)
 
@@ -36,9 +37,20 @@ export function FilmList({ type, endpoint }: IFilmListProps) {
     }
 
     useEffect(() => {
+        if (endpoint === 'favourites') {
+            const filteredFilms = films.filter(film => favoriteIds.includes(film.id));
+            dispatch(updateFilmsList(filteredFilms))
+        }
+    }, [favoriteIds, endpoint]);
+
+    useEffect(() => {
         dispatch(fetchGenres())
         const filterParams = Object.fromEntries(searchParams) // transform queryparams from url into object
         const preparedFilterParams = convertUrlFilterParams(filterParams, type) // change params depending on films or series path
+
+        if (sessionId) {
+            dispatch(fetchFavoriteIds(type))
+        }
 
         if (endpoint === 'search' && searchQuery) {
             dispatch(fetchFilms({ type, endpoint, query: searchQuery, page: currentPage }))

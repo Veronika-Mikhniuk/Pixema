@@ -7,7 +7,9 @@ import { IRequestFilmsParams, IRequestFilmParams, IRequestResponse } from '@/typ
 
 interface IFilmState {
     list: IFilm[]
+    favoriteIds: number[]
     loading: boolean
+    favoritesLoading: boolean
     error: string | null
     pageCount: number | null
     currentFilm: IFilmDetails | null
@@ -20,7 +22,9 @@ interface IFilmState {
 
 const initialState: IFilmState = {
     list: [],
+    favoriteIds: [],
     loading: false,
+    favoritesLoading: false,
     error: null,
     pageCount: null,
     currentFilm: null,
@@ -35,6 +39,72 @@ interface IErrorResponse {
     hasError: boolean
     message: string
 }
+
+export const fetchFavoriteIds = createAsyncThunk<
+    number[],
+    'films' | 'series',
+    { rejectValue: IErrorResponse }
+>(
+    'films/fetchFavoriteIds',
+    async (type, { getState, rejectWithValue }) => {
+        const state = getState() as { auth: { accountId: string | null } }
+        const { accountId } = state.auth
+
+        if (!accountId) {
+            return rejectWithValue({
+                hasError: true,
+                message: 'User not authenticated'
+            })
+        }
+
+        try {
+            // Get 1-st to find out total_pages
+            const firstPageData = await requestFilms({
+                type,
+                endpoint: 'favourites',
+                accountId,
+                page: 1
+            })
+
+            if (firstPageData.hasError) {
+                return rejectWithValue(firstPageData as IErrorResponse)
+            }
+
+            const totalPages = firstPageData.total_pages || 1
+            let allIds: number[] = firstPageData.results?.map(film => film.id) || []
+
+            // If total_pages >1 create array from otherPagesRequests
+            if (totalPages > 1) {
+                const otherPagesPromises = Array.from(
+                    { length: totalPages - 1 },
+                    (_, i) => requestFilms({
+                        type,
+                        endpoint: 'favourites',
+                        accountId,
+                        page: i + 2
+                    })
+                )
+
+                const otherPagesData = await Promise.all(otherPagesPromises)
+
+                // Combine all pages
+                otherPagesData.forEach(pageData => {
+                    if (!pageData.hasError && pageData.results) {
+                        allIds = [...allIds, ...pageData.results.map(film => film.id)]
+                    }
+                })
+            }
+
+            return allIds
+
+        } catch (error) {
+            return rejectWithValue({
+                hasError: true,
+                message: 'Failed to fetch favorites'
+            })
+        }
+    }
+)
 
 export const fetchFilms = createAsyncThunk<
     IRequestResponse,
@@ -99,10 +169,32 @@ export const filmsSlice = createSlice({
         },
         clearFilters: (state) => {
             state.activeFilters = null
+        },
+        addToFavoriteIds: (state, action: PayloadAction<number>) => {
+            state.favoriteIds.push(action.payload);
+        },
+        removeFromFavoriteIds: (state, action: PayloadAction<number>) => {
+            state.favoriteIds = state.favoriteIds.filter(id => id !== action.payload);
+        },
+        updateFilmsList: (state, action: PayloadAction<IFilm[]>) => {
+            state.list = action.payload;
         }
     },
     extraReducers: (builder) => {
         builder
+            // favorites
+            .addCase(fetchFavoriteIds.pending, (state) => {
+                state.favoritesLoading = true
+                state.error = null
+            })
+            .addCase(fetchFavoriteIds.fulfilled, (state, action: PayloadAction<number[]>) => {
+                state.favoritesLoading = false
+                state.favoriteIds = action.payload
+            })
+            .addCase(fetchFavoriteIds.rejected, (state, action) => {
+                state.favoritesLoading = false
+                state.error = action.payload?.message || action.error.message || 'Unknown error'
+            })
             // films
             .addCase(fetchFilms.pending, (state) => {
                 state.loading = true
@@ -147,5 +239,5 @@ export const filmsSlice = createSlice({
     }
 })
 
-export const { setSearchQuery, setActiveFilters, clearFilters } = filmsSlice.actions
+export const { setSearchQuery, setActiveFilters, clearFilters, addToFavoriteIds, removeFromFavoriteIds, updateFilmsList } = filmsSlice.actions
 export const filmsReducer = filmsSlice.reducer 
